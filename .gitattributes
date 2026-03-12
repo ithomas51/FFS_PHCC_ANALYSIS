@@ -1,0 +1,2 @@
+# Treat .7z files as binary and don't track changes in git history
+*.7z binary -diff
