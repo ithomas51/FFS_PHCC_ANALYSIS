@@ -130,7 +130,9 @@ def normalise_hcpcs(raw: str) -> tuple:
     if m:
         start, end = m.group(1), m.group(2)
         codes = expand_range(start, end)
-        if codes is not None:
+        if codes == "CATEGORY":
+            return s_flat, "CATEGORY_RANGE", f"Large catch-all range kept as-is: {start}-{end}", False, start, end
+        elif codes is not None:
             return codes, "RANGE_EXPANDED", f"{start}-{end}", True, start, end
         else:
             return s_flat, "MALFORMED_RANGE", f"Could not expand: {start}-{end}", False, start, end
@@ -160,7 +162,7 @@ def normalise_hcpcs(raw: str) -> tuple:
 
 
 def expand_range(start: str, end: str):
-    """Expand A6530-A6541 → [A6530, A6531, ..., A6541]. Returns None if invalid."""
+    """Expand A6530-A6541 → [A6530, A6531, ..., A6541]. Returns None if invalid, 'CATEGORY' if >100 codes."""
     if start[0] != end[0]:
         return None  # Different alpha prefix
     prefix = start[0]
@@ -169,8 +171,10 @@ def expand_range(start: str, end: str):
         n2 = int(end[1:])
     except ValueError:
         return None
-    if n2 < n1 or (n2 - n1) > 100:  # sanity: don't expand absurdly large ranges
-        return None
+    if n2 < n1:
+        return None  # Reversed range = typo
+    if (n2 - n1) > 100:
+        return "CATEGORY"  # Intentional catch-all category range
     return [f"{prefix}{str(i).zfill(4)}" for i in range(n1, n2 + 1)]
 
 
