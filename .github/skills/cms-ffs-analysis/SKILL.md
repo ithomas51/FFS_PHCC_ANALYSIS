@@ -24,26 +24,36 @@ Invoke this skill when the user asks for any of the following:
 - map PHCC modifiers to Integra/CMS/OHA modifiers
 - build review queues for pricing exceptions
 - classify note-based pricing such as `Retail less 25%`
+- enhance or reformat Excel comparison output
 
 ---
 
 ## Inputs Expected
 
-### Proposed schedules
+### Proposed schedules (in `data/INTEGRA_PHP_FFS/`)
 - `Integra_PHP_CARVEOUTS_COMMERCIAL.csv`
 - `Integra_PHP_CARVEOUTS_ASO.csv`
 - `Integra_PHP_CARVEOUTS_MEDICARE.csv`
 - `INTEGRA_PHP_CARVEOUTS_MEDICAID.csv`
 
-### Current schedules
+### Current schedules (in `data/Contract/`)
 - `PHCC_OR_CONTRACTED.csv`
-- `PHCC_OR_PARTICIPATING.csv`
+- `PHCC_OR_PARTICIPATING.csv`  (previously `PHCC_WA_PARTICIPATING.csv` mirrored here)
 - `PHCC_WA_PARTICIPATING.csv`
 
-### Public benchmarks
+### Public benchmarks (in `data/cms/`)
 - `CMS_2026_Q1_OR.csv`
 - `CMS_2026_Q1_WA.csv`
 - `OHA_FFS_09_2025_RAW.csv`
+- `2026_CMS_HCPCS.csv` (HCPCS description reference, 8,624 codes)
+
+### Cleaned outputs (in `data/cleaned/`, produced by `clean_phcc_files.py`)
+- `PHCC_OR_CONTRACTED_CLEAN.csv` (330 rows)
+- `PHCC_OR_PARTICIPATING_CLEAN.csv` (199 rows)
+- `PHCC_WA_PARTICIPATING_CLEAN.csv` (530 rows)
+- `PHCC_hcpcs_audit.csv` (3 CATEGORY_RANGE items)
+- `PHCC_hcpcs_range_expansion_audit.csv` (105 expanded rows)
+- `PHCC_K0_artifact_review.csv` (38 OCR correction mappings)
 
 ---
 
@@ -59,6 +69,7 @@ A comparison-ready master dataset with one row per comparison unit after expansi
 - rate-note audit
 - review queue
 - summary metrics by payer/state
+- Executive-ready XLSX workbook (multi-tab, formatted)
 
 ---
 
@@ -70,6 +81,7 @@ A comparison-ready master dataset with one row per comparison unit after expansi
 5. Normalize modifiers into tokens before comparison
 6. Separate numeric rates from note-based rates
 7. Keep an audit trail for every transformation
+8. Consume cleaned PHCC data (not raw) for comparison builds
 
 ---
 
@@ -101,10 +113,16 @@ Normalize and expand values such as:
 - `K0001-K0007`
 - `A6530-A6541`
 - `E2601 - E2610`
-- `L0112-L2861`
+
+### Category ranges (policy: keep as single row)
+Large umbrella ranges intentionally kept as-is and classified CATEGORY_RANGE:
+- `L0112-L2861` (Orthotics catch-all)
+- `L3000-L4631` (Orthotic procedures catch-all)
+- `L8300-L8485` (Trusses/prosthetic socks catch-all)
 
 Rules:
-- expand to one row per member code
+- small/medium ranges (≤100 codes): expand to one row per member code
+- category ranges (>100 codes): keep as single row, classify CATEGORY_RANGE
 - retain source row identity
 - carry forward modifier / rate / description context
 - record range start, range end, and member counts
@@ -153,6 +171,11 @@ Rules:
 ### Fallback rule
 If upstream source lacks the PHCC supplemental modifier but primary modifier matches, allow a primary-only match and send the row to review.
 
+### 3-tier matching strategy
+1. Exact: HCPCS + modifier match
+2. Proposed-mod-blank: HCPCS match where proposed has no modifier
+3. HCPCS-only: code match ignoring modifier (flagged for review)
+
 ---
 
 ## Rate Cleaning Strategy
@@ -162,12 +185,14 @@ Attempt strict numeric parsing after stripping `$`, commas, and whitespace.
 
 ### Note classes
 Classify non-numeric values into:
-- `RETAIL_LESS_PCT`
+- `PERCENT_OF_RETAIL` (e.g., "Retail less 25%")
 - `NON_BILLABLE`
-- `QUOTE`
-- `PER_15_MIN_NOTE`
-- `MEDICARE_ALLOWABLE_LESS_PCT`
-- `OTHER_NOTE`
+- `QUOTE_REQUIRED`
+- `PERCENT_OF_MEDICARE_ALLOWABLE` (e.g., "Medicare allowable less 20%")
+- `PREVAILING_STATE_RATES`
+- `PER_TIME_UNIT` (e.g., "per 15 min")
+- `COST_INVOICE`
+- `UNPARSED_TEXT`
 - `BLANK`
 
 Do not invent equivalent numeric values for these notes.
@@ -178,6 +203,7 @@ Do not invent equivalent numeric values for these notes.
 - Medicare rows use CMS OR/WA as applicable
 - Oregon Medicaid rows use OHA
 - Washington Medicaid rows without benchmark must remain flagged, not guessed
+- Comparison result: ABOVE_BENCHMARK / BELOW_BENCHMARK / EQUAL_TO_BENCHMARK / MISSING_BENCHMARK
 
 ---
 
@@ -189,15 +215,37 @@ Queue rows for manual review when:
 - fallback modifier match is used
 - rate value is non-numeric and blocks comparison
 - normalized keys collide unexpectedly
+- duplicate HCPCS+modifier rows found (e.g., E0248|NU)
 
 ---
 
-## Recommended Implementation Order
-1. detect columns
-2. normalize raw fields
-3. validate and repair HCPCS
-4. expand ranges
-5. normalize modifiers
+## Pipeline Execution Order
+
+### Step 1: Clean PHCC source files
+```
+python clean_phcc_files.py
+```
+Reads `data/Contract/` → writes `data/cleaned/`
+
+### Step 2: Validate cleaned output
+```
+python check_clean_output.py
+```
+Reads `data/cleaned/` → prints diagnostics
+
+### Step 3: Run comparison analysis
+```
+python analyze_fee_schedules.py
+```
+Reads `data/cleaned/` + `data/cms/` + `data/INTEGRA_PHP_FFS/` → writes `output/`
+
+---
+
+## Known Issues & Decisions
+- **E0248|NU duplicate**: appears twice in both OR and WA participating files — needs dedup policy
+- **Category ranges**: 3 L-code umbrella ranges kept as CATEGORY_RANGE — business must decide expand vs keep
+- **WA Medicaid benchmark**: no public WA Medicaid fee schedule loaded — flagged MISSING_BENCHMARK
+- **Contract files are clean**: 0 OCR corrections needed (unlike earlier OCR-extracted versions)
 6. explode PHCC rate-side rows
 7. parse numeric vs note-based rates
 8. match proposed to current
