@@ -1,0 +1,540 @@
+HCPCS,Modifier,Description,,Billing Unit,Rental Rate,Purchase Rate,Comments
+A4481,NU,Tracheostoma filter,,Each,,0.81,"62 per month, otherwise Certification Required"
+A4483,NU,"Moisture exchanger, disposable",,Each,,3.38,"62 per month, otherwise Certification Required"
+A4556,NU,"Electrodes, apnea monitor",,Pair,,8.5,
+A4557,NU,Lead wires,,Pair,,Retail less 30%,"1 unit every 12 months, otherwise Certification Required"
+A4558,NU,Conductive paste/ gel,,1 oz,,4.1,"Billable with Apnea Monitor. Not
+billable for TENS as it is included in A4595 Kit."
+A4595,NU,Electrical stimulator supplies,,Kit,,23.95,"2 Kits per month is standard, otherwise Certification Required
+* Kit may include electrodes,"
+A4604,NU,CPAP tubing with integrated heating element,,Each,,50,"1 per 3 months, otherwise Certification Required"
+A4605,NU,"Tracheal suction catheter, closed system",,Each,,14.9,No set Medicare Allowable. Prescribed Qty Allowed
+A4606,NU,"Oxygen probe for oximeter, replacement",,Each,,31.5,
+A4614,NU,Peak Flow Meter,,Each,,20.35,No set Medicare Allowable. Prescribed Qty Allowed
+A4615,NU,"Cannula or mask with 7"" tubing",,Each,,Non-billable,Non-billable
+A4616,NU,"Extension tubing, 50 ft.",,Each,,Non-billable,Non-billable
+A4620,NU,Variable oxygen mask,,Each,,Non-billable,Non-billable
+A4623,NU,"Tracheostomy, inner cannula",,Each,,5.75,"62 per month, otherwise Certification Required"
+A4624,NU,Tracheal suction catheter,,Each,,2.25,"3 per day, otherwise Certification Required"
+A4625,NU,Tracheostomy Care Kit - new tracheostomy,,Kit,,5,"31 per month, otherwise Certification Required"
+A4626,NU,Tracheostomy cleaning brush,,Each,,2.8,"2 per month, otherwise Certification Required"
+A4627,NU,Aero chamber,,Each,,21.6,"Not covered for PHP Medicare.
+Network Provider to bill with GZ modifier for denial."
+A4628,NU,Oropharyngeal suction catheter,,Each,,3.1,"3 per week, otherwise Certification Required"
+A4629,NU,Tracheostomy Care Kit - established tracheostomy,,Kit,,3.95,"31 per month, otherwise Certification Required
+For use with all tracheostomy patients more than two weeks post operative."
+A4640,NU,Alternating pressure pad,,Each,,43.6,Replacement Pad for patient owned Alternatinq Pump
+A6402,NU,"Sterile gauze, 16 square inches or less, without adhesive border",,Each,,0.09,"90 per month without border, otherwise Certification Required. Also used for VAP patient- DM/
+DA /DG for PHP Med"
+A6403,NU,"Sterile gauze, 16 - 48 square inches, without adhesive border",,Each,,0.33,"90 per month without border, otherwise Certification Required"
+A6407,NU,Packing strips,,1 yard,,1.44,No set Medicare Allowable. Prescribed Qty Allowed
+A6410,NU,Sterile eye pad,,Each,,0.3,No set Medicare Allowable. Prescribed Qty Allowed
+A6530-A6541,NU,Gradient Compression stocking - all types,,Each,,Retail less 25%,Certification required
+A6544-A6549,NU,Gradient Compression stocking - all types,,Each,,Retail less 25%,Certification required
+A7002,NU,"Tubing, used with suction",,Each,,3.28,
+A7003,NU,"Administration set, small volume nebulizer,",,Each,,1.94,"2 per month, otherwise Certification Required"
+A7004,NU,"Nebulizer cup only, disposable",,Each,,1.48,"2 per month, otherwise Certification Required (May be billed in addition to A7003)"
+A7007,NU,"Large volume nebulizer,
+disposable, unfilled, used",,Each,,4.15,"2 per month, otherwise Certification Required"
+A7009,NU,"Reservoir bottle, non-disposable, used with large",,Each,,35.95,No set Medicare Allowable. Prescribed Qty Allowed
+A7010,NU,"Corrugated tubing, disp, used with large volume",,100 ft,,15,"100 feet per 2 months, otherwise Certification Required"
+A7012,NU,"Water collection device, used with large volume",,Each,,2.75,"2 per month, otherwise Certification Required"
+A7013,NU,"Filter, disposable, used with aerosol compressor",,Each,,0.5,"2 per month, otherwise Certification Required"
+A7015,NU,Aerosol mask for DME nebulizer,,Each,,1.6,"1 per month, otherwise Certification Required"
+A7027,NU,"Combination oral/nasal mask, used with continuous",,Each,,202,"1 per 3 months, otherwise Certification Required"
+A7028,NU,Oral cushion for combination oral/nasal,,Each,,41,"2 per 1 month, otherwise Certification Required"
+A7029,NU,Nasal pillows for combination oral/nasal,,Pair,,18.5,"2 per 1 month, otherwise Certification Required"
+A7030,NU,CPAP full face mask,,Each,,128.5,"1 per 3 months, otherwise Certification Required"
+A7031,NU,CPAP face mask Interface - replacement,,Each,,47.6,"1 per month, otherwise Certification Required"
+A7032,NU,"CPAP mask cushion, replacement",,Each,,27.75,"2 per 1 month, otherwise Certification Required"
+A7033,NU,"CPAP pillows, replacement",,Pair,,19.3,"2 per 1 month, otherwise
+Certification Required"
+A7034,NU,CPAP mask,,Each,,80,"1 per 3 months, otherwise Certification Required"
+A7035,NU,Head gear for CPAP,,Each,,30,"1 per 6 months, otherwise Certification Required"
+A7036,NU,Chin strap for CPAP,,Each,,13.25,"1 per 6 months, otherwise Certification Required"
+A7037,NU,Tubing used with CPAP,,Each,,27.65,"1 per 3 months, otherwise Certification Required"
+A7038,NU,"Filter, disposable for CPAP",,Each,,3.75,"2 per 1 month, otherwise Certification Required"
+A7039,NU,"Filter, non-disposable for CPAP",,Each,,10.3,"1 per 6 months, otherwise Certification Required"
+A7046,NU,Water chamber for humidifier for CPAP,,Each,,15.8,"1 per 6 months, otherwise Certification Required"
+A7509,NU,Artificial nose,,Each,,2.7,"62 per month, otherwise Certification Required"
+A9270,NU,NOC item of service,,Each,,Retail less 25%,Not covered by all LOB
+A9900,NU/RR,Misc. DME supply or accessory NOC,,Each/Month,,Retail less 25%,Certification required
+A9900,NU,Breast pump starter kit; used with heavy duty breast,,Each,,,Certification required
+A9999,NU,Misc. DME supply or accessory NOC,,Each,,Retail less 25%,Certification required
+E0100,NU,"Cane, all materials, adjustable/ fixed",,Each,,16.8,Purchase Only
+E0105,NU,"Cane, quad (narrow or wide Base)",,Each,,34.2,Purchase Only
+E0110,NU,"Crutches, forearm",,Pair,,69.8,Purchase Only
+E0114,NU,"Crutches, underarm",,Pair,,33,Purchase Only
+E0135,NU,"Walker, folding, adjustable or fixed height",,Each,,60,Purchase Only
+E0143,NU,"Walker, folding with front wheels, adjustable or fixed",,Each,,92,Purchase Only
+E0147,NU,"Walker, heavy duty multi-braking",,Each,,465.6,Purchase Only
+E0148,NU,"Walker, heavy duty without wheels",,Each,,97.75,Purchase Only
+E0149,NU,"Walker, heavy duty with wheels",,Each,,178,Purchase Only
+E0153,NU,Crutch platform attachment,,Each,,56.2,Purchase Only
+E0154,NU,Walker platform attachment,,Each,,57.1,Purchase Only
+E0155,NU,"Walker wheels - standard or 5""",,Pair,,21,Purchase Only
+E0156,NU,Walker seat attachment,,Each,,21.5,Purchase Only
+E0158,NU,Walker leg extensions,,Set of 4,,23,Purchase Only
+E0159,NU,Walker glide brakes,,Pair,,14,Purchase Only
+E0163,NU,"Commode, stationary with fixed arms",,Each,,76,Purchase only; commode pail included
+E0165,NU/RR,"Commode, stationary with detachable arms",,Each/Month,14.45,130.05,"Billable for replacement to
+patient owned commode; otherwise bunded with rental."
+E0167,NU,"Commode, pail or pan",,Each,,8.6,Replacement only for patient owned commode
+E0168,NU/RR,"Commode, heavy duty",,Each/Month,14.45,130.05,Commode pail included
+E0185,NU,Gel overlay mattress,,Each,,343.6,Purchase only
+E0188,NU,Softgood kit for CPM,,Kit,,22.6,Purchase only
+E0197,NU,Air pressure pad for mattress,,Each,,Retail less 25%,
+E0199,NU,"Mattress, geo",,Each,,Retail less 25%,
+E0236,RR,Aqua K pump,,Month,30,,Not covered by all LOB
+E0241,NU,"Safety rail, bathtub wall",,Each,,20.7,Covered by PHA and YCCO. Not covered by PHP Commercial and PHP Medicare.
+E0243,NU,"Safety rail, toilet",,Each,,34.8,Covered by PHA and YCCO. Not covered by PHP Commercial and PHP Medicare.
+E0244,NU,Raised toilet seat (basic),,Each,,23.85,"Covered by PHA and YCCO. Not covered by PHP
+Commercial and PHP Medicare."
+E0245,NU,"Tub stool or bench, non-padded",,Each,,37.15,Covered by PHA and YCCO. Not covered by PHP Commercial and PHP Medicare.
+E0247,NU,"Tub transfer bench, non-padded",,Each,,70.2,Covered by PHA and YCCO. Not covered by PHP Commercial and PHP Medicare.
+E0248,NU,"Transfer bench, heavy duty",,Each,,Retail less 25%,"Covered by PHA and YCCO.
+Not covered by PHP Commercial and PHP Medicare."
+E0248,NU,"Transfer bench, heavy duty",,Each,,Retail less 25%,"Covered by PHA and YCCO.
+Not covered by PHP Commercial and PHP Medicare."
+E0249,NU,Aqua K pad,,Each,,60.75,Not covered by all LOB
+E0255,NU/RR,"Hospital bed, Vari height w/rails & mattress, 350lb.
+r.?n",,Each/Month,139,1339.8,"Certification required for rentals
+greater than 3 months and for purchase."
+E0256,NU/RR,"Hospital bed, Vari height w/rails, no mattress, 350lb.
+r.?n",,Each/Month,117.45,1174.5,Certification required for rentals greater than 3 months and for purchase.
+E0260,NU/RR,"Hospital bed, semi-electric w/rails& mattress, 350lb cap",,Each/Month,121.8,1339.8,Certification required for rentals greater than 3 months and for purchase.
+E0265,NU/RR,"Hospital bed, full electric w/ rails & mattress, 350lb cap",,Each/Month,144,1584,Certification required
+E0271,NU,"Mattress, innerspring",,Each,,165.3,"Replacement for patient owned
+bed"
+E0277,RR,Powered pressure reducing air mattress (replaces bed mattress),,Day,21.5,,"HS Certification required. HS may negotiate with Provider a rental to Cap at 13 months and after 13 months a maintenance rental can be billed every 6 months equivalent to 1 month
+rental."
+E0280,NU,Bed cradle,,Each,,32.65,Purchase only
+E0294,NU/RR,"Hospital bed, semi-electric no rails& mattress, 350lb",,Each/Month,116.8,1284.8,Certification required for rentals greater than 3 months and for
+E0296,NU/RR,"Hospital bed, Full-electric no rails & mattress, 350lb cap",,Each/Month,139,1529,Certification required
+E0303,NU/RR,"Hospital bed, heavy duty, 350 lb. to 600 lb.",,Each/Month,247.4,2473.4,Certification required
+E0304,NU/RR,"Hospital bed, heavy duty, 600Ib or greater",,Each/Month,593,5930,Certification required
+E0305,NU/RR,"Bed rails, half length",,Pair/Month,12.9,129,
+E0310,NU/RR,"Bed rails, full length",,Pair/Month,12.9,129,Covered by PHP Medicare only
+E0372,NU**/RR,Powered air overlay for mattress,,Day,15,,"Certification required. HS may negotiate with Provider a rental to Cap at 13 months. After 13 months a maintenance rental
+can be billed every 6 months equivalent to 1 month rental."
+E0424,"RR,QG,QF",Stationary gaseous Oxygen system,,Month,154,,"Certification required
+1. Includes equipment, contents, and supplies
+2. Must enter LPM and saturations for all new orders
+3. For LPMs over 4"
+E0424,RR/QE,Stationary gaseous Oxygen system,,Month,77,,"Certification required
+1. Includes equipment, contents, and supplies
+2. Must enter LPM and saturations for all new orders
+3. For LPMs under 1"
+E0424,RR,Stationary gaseous Oxygen system,,Month,140,,"Certification required.
+1. Includes equipment, contents, and supplies
+2. Must enter LPM and saturations for all new orders"
+E0431,RR,Portable Oxygen unit - high pressure,,Month,23.85,,"Certification required.
+1. Includes equipment, contents, and supplies
+2. Must enter LPM and saturations for all new orders"
+E0441,NU,"Stationary compressed Oxygen cylinder (S, K - 282 cu ft)",,Month,,69.7,"Certification required. Only billable only for patient owned stationary system. Can only bill
+code once per month to cover all tanks in a one month period."
+E0442,RR,Liquid Oxygen contents,,Month,139.35,,"Certification required. Billable
+with patient owned stationary system."
+E0443,NU,"Portable compressed Oxygen contents (A,B,C,D,E,M,M6)",,"One Month's
+Content",,69.7,Certification required. Billable with patient owned portable system.
+E0445,NU/RR,Pulse oximeter,,Each/Month,184.5,Retail less 25%,Certification required
+E0470,NU/RR,BiPAP- S,,Each/Month,196.65,1966.5,Certification required
+E0471,NU/RR,"BiPAP - ST, with noninvasive interface",,Each/Month,465.3,4653,Certification required
+E0472,NU/RR,"BiPAP - ST, with invasive interface",,Each/Month,494,4940,Certification required
+E0480,NU/RR,Percussor,,Each/Month,35.85,396.15,
+E0482,NU/RR,Cough stimulating device,,Month,Retail less 20%,Retail less 20%,
+E0555,NU,Humidifier - disposable,,Each,,Non-billable,Non-billable
+E0561,NU/RR,"Humidifier, non-heated, used with CPAP",,Each/Month,8.2,82,Certification required
+E0562,NU/RR,"Humidifier, heated, used with CPAP",,Each/Month,18.8,188,Certification required
+E0565,NU/RR,Compressor,,Each/Month,47,470,
+E0570,NU,"Nebulizer, small volume w/ compressor",,Each,,83,Purchase only
+E0574,NU,"Nebulizer, ultrasonic, small volume",,Each,,Retail less 25%,
+E0575,NU/RR,"Nebulizer, ultrasonic, large
+volume",,Each/Month,45,450,
+E0600,RRNU,"Suction machine, home model",,Each/Month,32,320,
+E0601,NU/RR,CPAP device,,Each/Month,78.75,787.5,Certification required
+E0618,RR,Apnea monitor without recording feature,,Month,233.65,,
+E0619,RR,Apnea monitor with recording feature,,Month,320,,
+E0621,NU,Patient lift sling/ seat - canvas or nylon,,Each,,117,Certification required
+E0627,NU,Mechanism for seat lift chair (incorporated in chair),,Each,,303.6,Certification required
+E0630,NU/RR,"Patient lift, hydraulic",,Each/Month,77,770,Certification required
+E0637,NU,"Combination sit-to-stand system, any size",,Each,,Retail less 25%,Certification required. Covered by PHA & YCCO. Not covered by all other LOB.
+E0638,NU,"Standing frame system, any size",,Each,,Retail less 25%,Certification required. Not covered by PHP Medicare.
+E0641,NU,"Standing frame system, multi-position, any size",,Each,,Retail less 25%,Certification required. Not covered by PHP Medicare.
+E0642,NU,"Standing frame system, mobile, any size",,Each,,Retail less 25%,Certification required. Not covered by PHP Medicare.
+E0705,NU,Transfer board,,Each,,47.15,Covered by PHA and YCCO. Not covered by PHP Commercial and PHP Medicare.
+E0730,NU,"TENS unit, 4 Lead",,Each,,295,Certification required. Purchase Only. 30 day trial with compliance required.
+E0731,NU,Conductive Garment worn with TENS unit,,Each,,360,Certification required. Purchase only.
+E0745,NU/RR,Muscle stimulator,,Each/Month,76.5,803.5,
+E0747,NU,Bone stimulator (Long Bone),,Each,,2850,Certification required
+E0748,NU,Bone stimulator (Spine),,Each,,3600,Certification required
+E0849,NU/RR,"Cervical traction
+Free-Standing",,Each/Month,47,470,Rent or Purchase if RX supports
+E0860,NU,"Traction, cervical over-door (basic)",,Each,,23.95,Purchase Only
+E0910,NU/RR,"Trapeze bar, bed attached type",,Each/Month,15,150,
+E0911,NU/RR,"Trapeze bar, heavy duty, attached to bed",,Each/Month,Retail less 25%,Retail less 25%,
+E0912,NU/RR,"Trapeze bar, heavy duty, free standing",,Each/Month,Retail less 25%,Retail less 25%,
+E0920,NU/RR,"Fracture frame, attached to hospital bed",,Each/Month,34.8,348,
+E0935,RR,CPM- Continuous passive motion exercise device for knee,,Day,25,,"No certification required for first 21 days if the diagnosis is knee
+replacement surgery. Otherwise, c:P.rtific:;:ition renuirerl."
+E0936,RR,CPM- Continuous passive motion exercise device for other than knee,,Day,Retail less 25%,,Not covered for all LOB
+E0940,NU/RR,Trapeze bar and frame (freestanding),,Each/Month,27.8,278,
+E0941,RR,"Traction, pelvic 90/90",,Each/Month,37.1,468,
+E0944,NU,"Traction, pelvic belt/ harness / boot",,Each,,39.2,Purchase only
+E0950,NU,"Wheelchair accessory, tray",,Each,Retail less 36%,Retail less 36%,Covered for upper extremity support only
+E0951,NU,Heel Loops,,Each,,18.25,
+E0952,NU,Toe Loop/Holder,,Each,,18.1,
+E0955,NU,"Wheelchair accessory, headrest, cushioned, any type, includes hardware",,Each,,194.1,
+E0956,NU,"Wheelchair accessory, lateral trunk or hip support, any type, includes hardware",,Each,,94.6,
+E0957,NU,"Wheelchair accessory, medial thigh support, any
+type includes fixed mounting hardware",,Each,,132.35,
+E0958,NU,"Wheelchair accessory, one-arm drive attachment",,Each,,Retail less 36%,
+E0959,NU,"Wheelchair accessory, adapter for amputee",,Each,,41.75,
+E0960,NU,"Wheelchair accessory, shoulder harness/straps or chest strap, includes
+mounting hardware",,Each,,Retail less 36%,
+E0961,NU,"Wheelchair accessory, wheel lock brake extension handle",,Each,,21.5,
+E0966,NU,Wheelchair head rest extension,,Each,,74.5,
+E0967,NU,Manual wc hand rim w project,,Each,,70.65,
+E0968,NU,Wheelchair commode seat,,Each,,Retail less 36%,Not covered for all LOB
+E0969,NU,Wheelchair narrowing device,,Each,,174.4,
+E0971,NU/RR,"Anti-tipping device, manual wheelchair",,Each/Month,2.8,28,
+E0973,NU,"Armrest, adjustable height, detachable, complete assembly",,Each,,110.35,
+E0974,NU/RR,"Wheelchair accessory, antiroll back device",,Each,7.7,77,
+E0978,NU,"Wheelchair accessory, belt/strap",,Each,,34.85,
+E0980,NU,Wheelchair safety vest,,Each,,34.35,
+E0981,NU,"Seat upholstery, replacement",,Each,,45.25,
+E0982,NU,"Back upholstery, replacement",,Each,,49.45,
+E0983,NU,Convert MWC to PWC-joystick control,,Each,,Retail less 36%,
+E0984,NU,Convert MWC to PWC - tiller control,,Each,,Retail less 36%,
+E0985,NU,"Wheelchair accessory, seat lift mechanism",,Each,,226,Certification required. Not covered all LOB.
+E0986,NU,"Wheelchair accessory, push activated power assist",,Each,,Retail less 36%,Certification required
+E0988,NU,"Wheelchair accessory, wheel drive",,Pair,,3204.3,Certification required
+E0990,NU,Wheelchair elevating leg res,,Each,,96.25,
+E0992,NU,Wheelchair solid seat insert,,Each,,78.1,
+E0994,NU,Wheelchair arm rest,,Each,,18.1,
+E0995,NU,Wheelchair calf rest,,Each,,29.15,
+E1002,NU,"Wheelchair power seating system, tilt only",,Each,,3664.5,Certification required
+E1003,NU,"Wheelchair power seating system, recline only, without shear reduction",,Each,,Retail less 36%,Certification required
+E1004,NU,"Wheelchair power seating system, recline only, with mechanical shear reduction",,Each,,Retail less 36%,Certification required
+E1005,NU,"Wheelchair power seating system, recline only, with power shear reduction",,Each,,Retail less 36%,Certification required
+E1006,NU,"Wheelchair power seating system, combination tilt and recline, without shear
+reduction",,Each,,Retail less 36%,Certification required
+E1007,NU,"Wheelchair power seating system, combination tilt and recline, with mechanical
+shear reduction",,Each,,7902.95,Certification required
+E1008,NU,"Wheelchair power seating system, combination tilt and recline, with power shear
+reduction",,Each,,Retail less 36%,Certification required
+E1009,NU,"Addition to power seating system, mechanically linked leg elevation system, including pushrod and leg rest",,Each,,Retail less 36%,Certification required
+E1010,NU,"Addition to power seating system, power leg elevation system, including leg rest",,Each,,Retail less 36%,Certification required
+E1011,NU,"Modification to pediatric size WC, width adjustment pkg (not to be dispensed with
+initial chair)",,Each,,Retail less 36%,Certification required
+E1012,NU,"Wheelchair accessory, Center mount, power elevating leg rest",,Each,,1795,Certification required
+E1014,NU,"Wheelchair accessory, reclining back, additional to pediatric wheelchair",,Each,,Retail less 36%,Certification required
+E1015,NU,Shock absorber for manual wheelchair,,Each,,125.1,
+E1016,NU,Shock absorber for power wheelchair,,Each,,125.1,
+E1017-E1018,NU,"Wheelchair accessory, shock absorber",,Each,,Retail less 36%,
+E1020,NU,"Residual limb support system for wheelchair, any type",,Each,,233.4,
+E1028,NU,"Wheelchair accessory, mounting hardware for joystick, other control interface or positioning accessory",,Each,,198.1,Certification required
+E1029,NU/RR,"Wheelchair accessory, vent tray",,Each,Retail less 36%,Retail less 36%,
+E1030,NU/RR,"Wheelchair accessory, vent tray gimbaled",,Each,Retail less 36%,Retail less 36%,
+E1031,NU/RR,Roll about chair (Geri-chair),,Each/Month,41,410,Certification required
+E1035-E1037,NU,Transport chair,,Each,,Retail less 36%,Certification required
+E1161,NU,Manual WC w/tilt in space,,Each,,2634,Certification required
+E1220,NU/RR,"Wheelchair, specially sized or constructed",,Each/Month,112,896,Certification required
+E1229,NU,"Wheelchair, pediatric size, not otherwise specified",,Each/Month,,Retail less 36%,Certification required
+E1231,NU,"Wheelchair, pediatric size, tilt-in-space, rigid, adjustable, with seating
+system",,Each/Month,,Retail less 36%,Certification required
+E1232,NU,"Wheelchair, pediatric size, tilt-in-space, folding, adjustable, with seating system",,Each/Month,,Retail less 36%,Certification required
+E1233,NU,"Wheelchair, pediatric size, tilt-in-space, rigid, adjustable, without seating
+system",,Each/Month,,Retail less 36%,Certification required
+E1234,NU,"Wheelchair, pediatric size, tilt-in-space, folding, adjustable, without seating
+system",,Each/Month,,Retail less 36%,Certification required
+E1235,NU,"Wheelchair, pediatric size, rigid, adjustable, with seating system",,Each/Month,,Retail less 36%,Certification required
+E1236,NU,"Wheelchair, pediatric size, folding, adjustable, with seating system",,Each/Month,,Retail less 36%,Certification required
+E1237,NU,"Wheelchair, pediatric size, rigid, adjustable, without seating system",,Each/Month,,Retail less 36%,Certification required
+E1238,NU,"Wheelchair, pediatric size, folding, adjustable, without seating system",,Each/Month,,Retail less 36%,Certification required
+E1355,NU/RR,Cart or stand for compressed gas cylinder,,Each/Month,4.5,49.5,Certification required
+E1372,NU/RR,"Immersion external heater, wraparound",,Each/Month,40.5,405,Certification required. 1 every 3 years.
+E1390,RR/QG,Oxygen concentrator,,Month,210,,"Certification required
+1. Includes equipment and supplies
+2. Must enter LPM and saturations for all new orders
+3. For LPMs over 4"
+E1390,RR/QE,Oxygen concentrator,,Month,70,,"Certification required
+1. Includes equipment and supplies
+2. Must enter LPM and saturations for all new orders
+3. For LPMs under 1"
+E1390,RR,Oxygen concentrator,,Month,140,,"Certification required
+1. Includes equipment and supplies
+2. Must enter LPM and saturations for all new orders"
+E1392,RR,"Oxygen concentrator, portable",,Month,51,,Certification required. E1392 may not be billed with E1390.
+E1399,NU/RR,"Durable Medical Equipment, miscellaneous",,Each/Month,Retail less 25%,Retail less 25%,Certification required
+E2000,RR,"Gastric suction pump, home model",,Month,44.3,,Rental Only
+E2201,NU/RR,"Wheelchair seat, non-
+standard width 20 - 23",,Each/Month,15,150,
+E2202,NU/RR,"Wheelchair seat, non-standard width 24 - 27 inches",,Each/Month,17.5,175,
+E2203,NU/RR,"Wheelchair seat, non-standard width 20 - 21 inches",,Each/Month,15,150,
+E2204,NU/RR,"Wheelchair seat, non-standard width 22 - 25 inches",,Each/Month,17.5,175,
+E2205,NU,"Manual wheelchair accessory, hand rim",,Each,,30.1,
+E2206,NU,Complete wheel lock assembly,,Each,,39.8,
+E2208,NU/RR,Cylinder tank carrier,,Each/Month,11.2,112,
+E2209,NU,Arm trough each,,Each,,101.15,
+E2210,NU,Wheelchair bearings,,Each,,6.3,
+E2211,NU,"Manual wheelchair accessory, pneumatic propulsion tire",,Each,,35.5,
+E2212,NU,"Manual wheelchair accessory, pneumatic prop tire tube",,Each,,5.5,
+E2213,NU,"Manual wheelchair accessory, pneumatic prop tire insert",,Each,,31,
+E2214,NU,"Manual wheelchair accessory, pneumatic caster tire each",,Each,,30.35,
+E2215,NU,"Manual wheelchair accessory, pneumatic caster tire tube",,Each,,10.5,
+"E2216-
+E2218",NU,Manual wheelchair accessories,,Each,,Retail less 36%,
+E2219,NU,"Manual wheelchair accessory, foam caster tire any size ea.",,Each,,42.25,
+E2220,NU,"Manual wheelchair accessory, solid propulsion tire each",,Each,,26.6,
+E2221,NU,"Manual wheelchair accessory, solid caster tire each",,Each,,27.75,
+E2222,NU,"Manual wheelchair accessory, solid caster integrated wheel",,Each,,23.15,
+E2223,NU,"Manual wheelchair accessory, replacement valve",,Each,,Retail less 36%,
+E2224,NU,Propulsion wheel excludes tire,,Each,,98.45,
+E2225,NU,Caster wheel excludes tire,,Each,,19.4,
+E2226,NU,Caster fork replacement only,,Each,,41,
+E2228,NU,"Manual wheelchair accessory, wheelchair brake",,Each,,865.9,Certification required
+E2231,NU,"Manual wheelchair accessory, solid seat support base",,Each,,144.9,
+E2291-E2295,NU,Pediatric wheelchair accessories,,Each,,Retail less 36%,Certification required
+E2310,NU,"Power wheelchair accessory, electronic connection between controller and 1 power seating system motor",,Each,,1122.7,Certification required
+E2311,NU,"Power wheelchair accessory, electronic connection between controller and 2 or more power seat system motors",,Each,,2273.3,Certification required
+E2312,NU,"Power wheelchair accessory, mini-prop remote joystick",,Each,,Retail less 36%,Certification required
+E2313,NU,"Wheelchair accessory, harness, expand control",,Each,,Retail less 36%,Certification required
+E2321,NU,"Power wheelchair accessory, hand control interface, remote joystick",,Each,,Retail less 36%,Certification required
+E2322,NU,"Power wheelchair accessory, hand control
+interface, multiple mechanical switches",,Each,,Retail less 36%,Certification required
+E2323,NU,"Power wheelchair accessory, special joystick handle",,Each,,66.4,Certification required
+E2324,NU,"Power wheelchair accessory, chin cup interface",,Each,,42.05,Certification required
+E2325,NU,"Power wheelchair accessory, sip and puff interface",,Each,,Retail less 36%,Certification required
+E2326,NU,"Power wheelchair accessory, breath tube kit for sip and puff interface",,Each,,Retail less 36%,Certification required
+E2327,NU,"Power wheelchair accessory, head control interface, mechanical",,Each,,Retail less 36%,Certification required
+E2328,NU,"Power wheelchair accessory, head control or
+extremity control interface, electronic",,Each,,Retail less 36%,Certification required
+E2329,NU,"Power wheelchair accessory, head control interface, contact switch
+mechanism",,Each,,Retail less 36%,Certification required
+E2330,NU,"PWC accessory, head control interface, proximity switch mechanism",,Each,,Retail less 36%,Certification required
+E2340,NU,"Power wheelchair accessory, 20 - 24-inch width seat frame",,Each,,398.95,
+E2341,NU,"Power wheelchair accessory, 24 - 27-inch width seat frame",,Each,,598.45,
+E2342,NU,"Power wheelchair accessory, 20 - 21-inch depth seat frame",,Each,,498.75,
+E2343,NU,"Power wheelchair accessory, 22 - 25-inch depth seat frame",,Each,,797.95,
+E2351,NU,"Power wheelchair accessory, electronic interface to operate speech generating device using PWC control interface",,Each,,Retail less 36%,Certification required
+E2359,NU,"Power wheelchair accessory, Group 34 sealed lead acid battery",,Each,,193.3,
+E2360,NU,"Power wheelchair accessory, 22 NF non-sealed lead acid",,Each,,148,Certification required. Covered by PHA and YCCO. All other LOB not covered.
+E2361,NU,"Power wheelchair accessory, 22 NF sealed lead acid battery (gel cell)",,Each,,131.6,
+E2362,NU,"Power wheelchair accessory, group 24 non-sealed lead acid battery",,Each,,100.7,Certification required
+E2363,NU,"Power wheelchair accessory, group 24 sealed lead acid battery (gel cell)",,Each,,175.5,
+E2365,NU,"Power wheelchair accessory, u-1 sealed lead acid battery (gel cell)",,Each,,105.85,
+E2366,NU,Battery charger for electric wheelchair,,Each,,252.95,
+E2367,NU,Battery charger for electric wheelchair - dual,,Each,,402.1,Certification required
+E2368,NU,"Power Wheelchair component, drive wheel motor, replacement only",,Each,,521.7,
+E2369,NU,"Power Wheelchair component, drive wheel gear box, replacement only",,Each,,431.9,
+E2370,NU,"Power wheelchair component; integrated drive wheel motor and gear box combination, replacement only",,Each,,770.4,
+E2371,NU,"Power wheelchair accessory, group 27 sealed lead acid battery (gel cell)",,Each,,142.1,
+E2372,NU,"Power wheelchair accessory, group 27 non-sealed lead acid battery",,Each,,Retail less 36%,Certification required. Not covered all LOB.
+E2373,NU,"Power wheelchair accessory, hand or chin
+control interface, compact remote joystick",,Each,,Retail less 36%,Certification required
+E2374,NU,"Power wheelchair accessory, hand or chin control interface, standard
+remote joystick",,Each,,Retail less 36%,Certification required
+E2375,NU,"Power wheelchair accessory, nonexpendable controller, replacement only",,Each,,821.7,Certification required
+E2376,NU,"Power wheelchair accessory, expandable controller, replacement only",,Each,,Retail less 36%,Certification required
+E2377,NU,"Power wheelchair accessory, expandable
+controller, provided at initial issue",,Each,,Retail less 36%,Certification required
+E2378,NU,"Power wheelchair component, actuator, replacement only",,Each,,Retail less 36%,Certification required
+E2381,NU,"Power wheelchair accessory, pneumatic drive wheel tire",,Each,,71.85,
+E2382,NU,"Power wheelchair accessory, tube for pneumatic drive wheel tire",,Each,,19.6,
+E2383,NU,"Power wheelchair accessory, insert for pneumatic drive wheel tire",,Each,,143.3,
+E2384,NU,"Power wheelchair accessory, pneumatic caster tire",,Each,,76.4,
+E2385,NU,"Power wheelchair accessory, tube for pneumatic caster tire",,Each,,46.7,
+E2386,NU,"Power wheelchair accessory, foam filled drive wheel tire",,Each,,142,
+E2387,NU,"Power wheelchair accessory, foam filled caster tire",,Each,,61.3,
+E2388,NU,"Power wheelchair accessory, foam drive wheel tire",,Each,,48.35,
+E2389,NU,"Power wheelchair accessory, foam caster tire",,Each,,26.25,
+E2390,NU,"Power wheelchair accessory, solid drive wheel tire",,Each,,41.05,
+E2391,NU,"Power wheelchair accessory, solid caster tire",,Each,,19.65,
+E2392,NU,"Power wheelchair accessory, solid caster tire with integrated wheel",,Each,,51.7,
+E2394,NU,"Power wheelchair accessory, drive wheel excludes tire",,Each,,73.65,
+E2395,NU,"Power wheelchair accessory, caster wheel excludes tire",,Each,,52.35,
+E2396,NU,"Power wheelchair accessory, caster fork",,Each,,63.8,
+E2397,NU,"Power wheelchair accessory, lithium-based
+battery",,Each,,461.05,
+E2601-E2610,NU,Wheelchair seat cushion,,Each,,Retail less 36%,"Certification required, except for
+E2601 and E2602"
+E2611-E2621,NU,Wheelchair back cushion,,Each,,Retail less 36%,"Certification required, except for
+E2611 and E2612"
+E2622-E2623,NU,Skin protection wheelchair cushion,,Each,,Retail less 36%,Certification required
+E2624-E2625,NU,Skin protection and positioning wheelchair cushion,,Each,,Retail less 36%,Certification required
+E2626,NU,"Wheelchair accessory, shoulder elbow, mobile arm support attached to wheelchair, balanced, adjustable",,Each,,691.5,Certification required
+E2627,NU,"Wheelchair accessory, shoulder elbow, mobile arm support attached to wheelchair, balanced, adjustable rancho type",,Each,,1103.35,Certification required
+E2628,NU,"Wheelchair accessory, shoulder elbow, mobile arm support attached to wheelchair, balanced, reclining",,Each,,831.2,Certification required
+E2629,NU,"Wheelchair accessory, shoulder elbow, mobile arm support attached to wheelchair, balanced, friction dampening arm
+support",,Each,,1051.9,Certification required
+E2630,NU,"WC ace, shoulder elbow, mobile arm spt, mono susp arm/hand spt, overhead elbow forearm hand sling spt, yoke type susp spt",,Each,,735.6,Certification required
+E2631,NU,"Wheelchair accessory, addition to mobile arm support, elevating proximal
+arm",,Each,,250.1,Certification required
+E2632,NU,"Wheelchair accessory, addition to mobile arm support, offset or lateral rocker arm with elastic balance control",,Each,,159,Certification required
+E2633,NU,"Wheelchair accessory, addition to mobile arm support, supinator",,Each,,158.7,Certification required
+K0001,NU/RR,"Manual wheelchair, standard adult, fixed/removeable arms,
+standard footrest",,Each/Month,40,400,Certification required
+K0002,NU/RR,"Manual wheelchair, standard hemi, fixed/removeable arms,
+standard footrest",,Each/Month,40,400,Certification required
+K0003,NU/RR,"MWC, lightweight, fixed/removeable arms, standard footrest",,Each/Month,45.95,505.45,Certification required
+K0004,NU/RR,"MWC, high-strength lightweight,
+fixed/removeable arms, std footrest",,Each/Month,45.25,452.5,Certification required
+K0005,NU/RR,"Manual wheelchair, ultra-lightweight (special sizing)",,Each/Month,202.4,2024,Certification required
+K0006,NU/RR,"MWC, heavy duty, fixed/removeable arms, standard footrest",,Each/Month,94.8,948,Certification required
+K0007,NU/RR,"Manual wheelchair, extra-heavy duty, fixed/removeable arms,
+standard footrest",,Each/Month,134.9,1349,Certification required
+K0009,NU,Other manual wheelchair base,,Each,,Quote,Certification required
+K0015,NU,"Detachable, non-adjustable height armrest",,Each,,171.3,
+K0017,NU,"Detachable, adjustable height armrest base",,Each,,48.2,
+K0018,NU,"Detachable, adjustable height armrest, upper portion",,Each,,26.95,
+K0019,NU,Arm pad,,Each,,16.5,
+K0020,NU,"Fixed, adjustable height armrest, pair",,Pair,,43.85,
+K0037,NU,High mount flip-up footrest,,Each,,46.2,
+K0038,NU,Leg strap each,,Each,,22.9,
+K0039,NU,Leg strap h style each,,Each,,50.85,
+K0040,NU,Adjustable angle footplate,,Each,,70.45,
+K0041,NU,Large size footplate each,,Each,,50,
+K0042,NU,Standard size footplate each,,Each,,29.75,
+K0043,NU,Footrest lower extension tube,,Each,,18.45,
+K0044,NU,Footrest upper hanger bracket,,Each,,15.7,
+K0045,NU,Footrest complete assembly,,Each,,54.3,
+K0046,NU,Elevating leg rest low extension,,Each,,18.45,
+K0047,NU,Elevating leg rest upper hanger bracket,,Each,,72.15,
+K0050,NU,Ratchet assembly,,Each,,29.6,
+K0051,NU,"Cam release assembly, footrest or leg rest",,Each,,49.6,
+K0052,NU/RR,Swing away detachable footrest,,Each,,87.5,
+K0053,NU/RR,"Elevating footrest, articulating",,Each/Month,9.65,96.5,
+K0056,NU,"Seat height under 17 inches, or 21 inches or greater for a high strength, lightweight, or ultralightweight wheelchair",,Each,,104.1,
+K0065,NU,Spoke protectors,,Each,,48.7,
+K0069,NU,"Rear wheel assembly, complete, with solid tire, spokes or molded",,Each,,109.35,
+K0070,NU,"Rear wheel assembly, complete, with pneumatic tire, spokes or molded",,Each,,200.6,
+K0071,NU,"Front caster assembly, complete, with pneumatic tire",,Each,,119.55,
+K0072,NU,"Front caster assembly, complete, with semi-pneumatic tire",,Each,,67.65,
+K0073,NU,Caster pin lock,,Each,,36.65,
+K0077,NU,"Front caster assembly, complete, with solid tire",,Each,,64.4,
+K0098,NU,Drive belt power for wheelchair,,Each,,24.9,
+K0105,NU,Iv hanger,,Each,,108.85,HS Certification required
+K0108,NU/RR,"Wheelchair component or accessory, not otherwise specified",,Each/Month,Retail less 36%,Retail less 36%,Certification required
+K0195,NU/RR,Elevating leg rests,,Pair/Month,10.9,109,
+K0462,RR,"Temporary replacement for patient owned equipment being repaired, any type",,Month,Retail less 25%,,Certification required
+K0669,NU,"Wheelchair seat or back cushion, no coding from SADME",,Each,,Retail less 36%,Certification required
+K0738,RR,Portable gas oxygen system (Home fill),,Month,26.45,,Certification required
+K0739,NU,"Labor, repair DME other than Oxygen",,per15 minutes,,"$15.40
+per 15 min",Certification required when billed by itself
+K0740,NU,Repair for Oxygen Equipment,,per15 minutes,,"$15.40
+per 15 min",
+K0800,NU,"Power operated vehicle (scooter), group 1 standard, capacity up to and including
+300 lbs.",,Each,,Retail less 37%,Certification required
+K0801,NU,"Power operated vehicle (scooter), group 1 heavy duty, capacity 301 - 450 lbs.",,Each,,Retail less 37%,Certification required
+K0802,NU,"Power operated vehicle (scooter), group 1 very
+heavy duty, capacity 451 - 600 lbs.",,Each,,Retail less 37%,Certification required
+K0806,NU,"Power operated vehicle (scooter), group 2 standard,
+capacity up to and including 300 lbs.",,Each,,1564,Certification required
+K0807,NU,"Power operated vehicle (scooter), group 2 heavy duty, capacity 301 - 450 lbs.",,Each,,2373,Certification required
+K0813,NU,"Power wheelchair, group 1 standard, portable, sling/solid seat and back, capacity up to and including 300 lbs.",,Each,,2405.1,Certification required
+K0814,NU,"Power wheelchair, group 1 standard, portable, captains
+chair, capacity up to and including 300 lbs.",,Each,,2487.55,Certification required
+K0815,NU,"Power wheelchair, group 1 standard, sling/solid seat and back, capacity up to
+and including 300 lbs.",,Each,,2744.75,Certification required
+K0816,NU,"Power wheelchair, group 1 standard, captains chair, capacity up to and including
+300 lbs.",,Each,,2545.2,Certification required
+K0820,NU,"Power wheelchair, group 2 standard, portable, sling/solid seat and back, capacity up to and including 300 lbs.",,Each,,2470.75,Certification required
+K0821,NU,"Power wheelchair, group 2 standard, portable, captains
+chair, capacity up to and including 300 lbs.",,Each,,2549.7,Certification required
+K0822,NU,"Power wheelchair, group 2 standard, portable, sling/solid seat and back, capacity up to and including 300 lbs.",,Each,,2741.9,Certification required
+K0823,NU,"Power wheelchair, group 2 standard, captains chair, capacity up to and including
+300 lbs.",,Each,,2551.6,Certification required
+K0824,NU,"Power wheelchair, group 2 heavy duty, sling/solid seat
+and back, capacity 301 - 450 lbs.",,Each,,3932.65,Certification required
+K0825,NU,"Power wheelchair, group 2 heavy duty, captains chair, capacity 301 - 450 lbs.",,Each,,3643.7,Certification required
+K0826,NU,"Power wheelchair, group 2 very heavy duty, sling/solid seat and back, capacity 451
+to 600 lbs.",,Each,,6658.35,Certification required
+K0827,NU,"Power wheelchair, group 2 very heavy duty, captains chair, capacity 451 to 600
+lbs.",,Each,,5817.75,Certification required
+K0828,NU,"Power wheelchair, group 2 extra heavy duty, sling/solid
+seat and back, capacity 601 lbs. or more",,Each,,Retail less 36%,Certification required
+K0829,NU,"Power wheelchair, group 2 extra heavy duty, captains chair, 601 lbs. or more",,Each,,Retail less 36%,Certification required
+K0830,NU,"Power wheelchair, group 2 standard, seat elevator, sling/solid seat and back, capacity up to and including 300 lbs.",,Each,,Retail less 36%,Certification required
+K0831,NU,"Power wheelchair, group 2 standard, seat elevator, captains chair, patient weight capacity up to and including 300 lbs.",,Each,,Retail less 36%,Certification required
+K0835,NU,"PWC, group 2 standard, single power option, sling/solid seat and back, capacity up to and including 300 lbs.",,Each,,2905.95,Certification required
+K0836,NU,"PWC, group 2 standard, single power option, captain's chair, capacity up
+to and including 300 lbs.",,Each,,3014.1,Certification required
+K0837,NU,"Power wheelchair, group 2 heavy duty, single power option, sling/solid seat and back, capacity 301 to 450
+lh?",,Each,,3727.3,Certification required
+K0838,NU,"Power wheelchair, group 2 heavy duty, single power option, captain's chair,
+capacity 301 to 450 lbs.",,Each,,3303.55,Certification required
+K0839,NU,"Power wheelchair, group 2 very heavy duty, single power option, sling/solid seat and back, capacity 451
+to nOO lh?",,Each,,Retail less 36%,Certification required
+K0840,NU,"Power wheelchair, group 2 extra heavy duty, single power option, sling/solid seat and back, capacity 601
+lh? or more",,Each,,Retail less 36%,Certification required
+K0841,NU,"PWC, group 2 standard, multiple power option, sling/solid seat and back, capacity up to and including
+1001h?",,Each,,3274.8,Certification required
+K0842,NU,"Power wheelchair, group 2 standard, multiple power option, captains chair, capacity up to and including
+1001h?",,Each,,3270.05,Certification required
+K0843,NU,"Power wheelchair, group 2 heavy duty, multiple power option, sling/solid seat and back, capacity 301 to 450
+lh?",,Each,,3881.9,Certification required
+K0848,NU,"Power wheelchair, group 3 standard, sling/solid seat and back, capacity up to
+and including 300 lbs.",,Each,,5549,Certification required
+K0849,NU,"Power wheelchair, group 3 standard, captain's chair, capacity up to and including 300 lbs.",,Each,,5335,Certification required
+K0850,NU,"Power wheelchair, group 3 heavy duty, sling/solid seat and back, capacity 301 to
+450 lbs.",,Each,,6436,Certification required
+K0851,NU,"Power wheelchair, group 3 heavy duty, captain's chair, capacity 301 to 450 lbs",,Each,,6188,Certification required
+K0852,NU,"Power wheelchair, group 3 very heavy duty, sling/solid seat and back, capacity 451
+to 600 lbs.",,Each,,Retail less 36%,Certification required
+K0853,NU,"Power wheelchair, group 3 very heavy duty, captain's chair, capacity 451 to 600 lbs.",,Each,,Retail less 36%,Certification required
+K0854,NU,"Power wheelchair, group 3 extra heavy duty, sling/solid
+seat and back, capacity 601 lbs. or more",,Each,,Retail less 36%,Certification required
+K0855,NU,"Power wheelchair, group 3 extra heavy duty, captain's chair, capacity 601 lbs. or
+more",,Each,,Retail less 36%,Certification required
+K0856,NU,"Power wheelchair, group 3 standard, single power option, sling/solid seat and back, capacity up to and including 300 lbs.",,Each,,5956,Certification required
+K0857,NU,"PWC, group 3 standard, single power option,
+captain's chair, capacity up to and including 300 lbs.",,Each,,6075,Certification required
+K0858,NU,"PWC, group 3 heavy duty, single power option, sling/solid seat and back,
+capacity 301 to 450 lbs.",,Each,,7389,Certification required
+K0859,NU,"Power wheelchair, group 3 heavy duty, single power option, captain's chair,
+capacity 301 to 450 lbs.",,Each,,7047,Certification required
+K0860,NU,"Power wheelchair, group 3 very heavy duty, single power option, sling/solid seat and back, capacity 451
+to hnn lh?",,Each,,10557,Certification required
+K0861,NU,"PWC, group 3 standard, multiple power option, sling/solid seat and back, capacity up to and including
+1nn1h?",,Each,,5965,Certification required
+K0862,NU,"Power wheelchair, group 3 heavy duty, multiple power option, sling/solid seat and back, capacity 301 to 450
+lh?",,Each,,7389,Certification required
+K0863,NU,"Power wheelchair, group 3 very heavy duty, multiple power option, sling/solid seat and back, capacity 451
+to ?.flfl Inc",,Each,,10557,Certification required
+K0864,NU,"Power wheelchair, group 3 extra heavy duty, multiple power option, sling/solid seat and back, capacity 601
+Inc nr mnrP",,Each,,Retail less 36%,Certification required
+K0868,NU,"PWC, group 4 standard, sling/solid seat and back, capacity up to and including
+300 lbs.",,Each,,Retail less 36%,Certification required
+K0869,NU,"Power wheelchair, group 4 standard, captain's chair, capacity up to and including
+300 lbs.",,Each,,Retail less 36%,Certification required
+K0870,NU,"Power wheelchair, group 4 heavy duty, sling/solid seat
+and back, capacity 301 to 450 lbs.",,Each,,Retail less 36%,Certification required
+K0871,NU,"Power wheelchair, group 4 very heavy duty, sling/solid seat and back, capacity 451
+to 600 lbs.",,Each,,Retail less 36%,Certification required
+K0877,NU,"Power wheelchair, group 4 standard, single power option, sling/solid seat and back, capacity up to and
+inch 1rlina 1nn lhc:",,Each,,Retail less 36%,Certification required
+K0878,NU,"Power wheelchair, group 4 standard, single power option, captain's chair,
+capacity up to and including 1nn1hc:",,Each,,Retail less 36%,Certification required
+K0879,NU,"Power wheelchair, group 4 heavy duty, single power option, sling/solid seat and back, capacity 301 to 450
+lhc:",,Each,,Retail less 36%,Certification required
+K0880,NU,"Power wheelchair, group 4 very heavy duty, single power option, sling/solid seat and back, capacity 451
+to ?.nn lhc:",,Each,,Retail less 36%,Certification required
+K0884,NU,"PWC, group 4 standard, multiple power option, sling/solid seat and back,
+capacity up to and including 1nn Inc:",,Each,,Retail less 36%,Certification required
+K0885,NU,"Power wheelchair, group 4 standard, multiple power option, captain's chair,
+capacity up to and including 1nn1nc:",,Each,,Retail less 36%,Certification required
+K0886,NU,"Power wheelchair, group 4 heavy duty, multiple power option, sling/solid seat and back, capacity 301 to 450
+Inc",,Each,,Retail less 36%,Certification required
+K0890,NU,"Power wheelchair, group 5 pediatric, single power option, sling/solid seat and back, capacity up to and
+inl""'l11rlinn 1 ?t; Inc",,Each,,Retail less 36%,Certification required
+K0891,NU,"PWC, group 5 pediatric, multiple power option, sling/solid seat and back, capacity up to and including
+1?c; lhc:.",,Each,,Retail less 36%,Certification required
+K0898,NU,Power wheelchair not otherwise classified,,Each,,Retail less 36%,Certification required
+K0899,NU,"Power mobility device, not coded by dme pdac or does not meet criteria",,Each,,Retail less 36%,Certification required
+L0112-L2861,NU,Orthotics,,Each,,Medicare Allowable less 20%,LO130-L2861- certification required if over $370 (contract rate); excludes L1810-L1860)
+L2999,NU,"Lower extremity orthosis, NOS",,Each,,Retail less 25%,Certification required
+L3000-L4631,NU,Orthotic procedures and devices,,Each,,Medicare Allowable less 20%,"Certification required if over
+$370 (contract rate)"
+L8300-L8485,NU,Trusses and prosthetic socks,,Each,,Medicare Allowable less 20%,Certification required
+S8265,NU,Haberman feeder,,Each,,Retail less 25%,

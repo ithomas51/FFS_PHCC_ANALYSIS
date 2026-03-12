@@ -10,8 +10,8 @@ import sys
 import numpy as np
 from pathlib import Path
 
-# Ensure we import from the same directory
-sys.path.insert(0, str(Path(__file__).resolve().parent))
+# Import from PHCC/scripts/ where analyze_fee_schedules.py lives
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "PHCC" / "scripts"))
 
 from analyze_fee_schedules import (
     normalize_hcpcs,
