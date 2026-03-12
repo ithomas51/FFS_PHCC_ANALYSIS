@@ -1085,7 +1085,15 @@ def write_xlsx(master: pd.DataFrame):
     else:
         ws_bb.cell(row=1, column=1, value="No proposed rates below CMS/OHA benchmark")
 
-    # ── Tab 6: Rural vs Non-Rural ──
+    # ── Tab 6: Contract Lower Than Medicare ──
+    ws_clm = wb.create_sheet("Contract Lower Than Medicare")
+    _write_contract_lower_than_medicare(ws_clm, primary)
+
+    # ── Tab 7: PHCC Current vs CMS NR/R ──
+    ws_rc = wb.create_sheet("PHCC Current vs CMS")
+    _write_phcc_vs_cms_ratecheck(ws_rc, primary)
+
+    # ── Tab 8: Rural vs Non-Rural ──
     # Medicare primary matches with CMS data
     rural_df = primary[
         (primary["payer_group"] == "Medicare") &
@@ -1127,7 +1135,7 @@ def write_xlsx(master: pd.DataFrame):
     else:
         ws_rural.cell(row=1, column=1, value="No Medicare CMS benchmark data")
 
-    # ── Tab 7: Review Queue ──
+    # ── Tab 9: Review Queue ──
     review = master[master["review_required"] == True].copy()
     review_cols = [
         "state", "payer_group", "current_schedule_type",
@@ -1151,11 +1159,11 @@ def write_xlsx(master: pd.DataFrame):
     else:
         ws_review.cell(row=1, column=1, value="No rows flagged for review")
 
-    # ── Tab 8: Audit Trail ──
+    # ── Tab 10: Audit Trail ──
     ws_audit = wb.create_sheet("Audit Trail")
     _write_audit_trail(ws_audit)
 
-    # ── Tab 9: Data Sources ──
+    # ── Tab 11: Data Sources ──
     ws_sources = wb.create_sheet("Data Sources")
     _write_data_sources(ws_sources, master)
 
@@ -1164,6 +1172,385 @@ def write_xlsx(master: pd.DataFrame):
     print(f"\n[XLSX] {out_path.name} saved with {len(wb.sheetnames)} tabs")
     print(f"    Tabs: {', '.join(wb.sheetnames)}")
     return out_path
+
+
+def _write_phcc_vs_cms_ratecheck(ws: Worksheet, primary: pd.DataFrame):
+    """
+    Rate-check sheet: PHCC current contracted rate +/- CMS NR and Rural.
+    Shows every primary match that has BOTH a current PHCC rate AND at least
+    one CMS benchmark, with computed deltas for quick analysis.
+    """
+    # Work on rows that have a usable PHCC current rate and at least one CMS rate
+    df = primary.copy()
+    df["_cur"] = pd.to_numeric(df["current_rate_numeric"], errors="coerce")
+    df["_nr"] = pd.to_numeric(df["cms_benchmark_nr"], errors="coerce")
+    df["_r"] = pd.to_numeric(df["cms_benchmark_r"], errors="coerce")
+    has_data = df["_cur"].notna() & (df["_nr"].notna() | df["_r"].notna())
+    df = df[has_data].copy()
+
+    # Compute PHCC current vs CMS deltas
+    df["cur_vs_nr_amt"] = df["_cur"] - df["_nr"]
+    df["cur_vs_nr_pct"] = np.where(
+        df["_nr"].notna() & (df["_nr"] != 0),
+        (df["_cur"] - df["_nr"]) / df["_nr"] * 100, np.nan)
+    df["cur_vs_nr_status"] = np.where(
+        df["_nr"].isna(), "NO_NR_RATE",
+        np.where(df["_cur"] > df["_nr"], "ABOVE",
+        np.where(df["_cur"] < df["_nr"], "BELOW", "EQUAL")))
+
+    df["cur_vs_r_amt"] = df["_cur"] - df["_r"]
+    df["cur_vs_r_pct"] = np.where(
+        df["_r"].notna() & (df["_r"] != 0),
+        (df["_cur"] - df["_r"]) / df["_r"] * 100, np.nan)
+    df["cur_vs_r_status"] = np.where(
+        df["_r"].isna() | (df["_r"] == 0), "NO_RURAL_RATE",
+        np.where(df["_cur"] > df["_r"], "ABOVE",
+        np.where(df["_cur"] < df["_r"], "BELOW", "EQUAL")))
+
+    # ── Header ──
+    ws.cell(row=1, column=1,
+            value="PHCC Current Rate vs CMS Medicare (NR / Rural)").font = Font(bold=True, size=14)
+    ws.cell(row=2, column=1,
+            value=f"Generated: {datetime.now():%Y-%m-%d %H:%M}").font = Font(italic=True, size=10, color="666666")
+
+    row = 4
+    ws.cell(row=row, column=1, value="PURPOSE").font = Font(bold=True, size=12, color="C00000")
+    row += 1
+    purpose_lines = [
+        "Rate-check analysis: Are PHCC's current contracted rates above or below Medicare CMS?",
+        "CMS Non-Rural (NR) = primary benchmark.  Rural (R) shown for reference.",
+        "Δ Amount = PHCC Current − CMS rate.  Positive = PHCC higher, Negative = PHCC lower.",
+        "Δ % = (PHCC Current − CMS) / CMS × 100.",
+    ]
+    for line in purpose_lines:
+        ws.cell(row=row, column=1, value=line).font = Font(size=10)
+        row += 1
+
+    # ── Summary ──
+    row += 1
+    ws.cell(row=row, column=1, value="SUMMARY — vs CMS Non-Rural").font = Font(bold=True, size=12, color="4472C4")
+    row += 1
+
+    nr_valid = df[df["cur_vs_nr_status"] != "NO_NR_RATE"]
+    nr_above = len(nr_valid[nr_valid["cur_vs_nr_status"] == "ABOVE"])
+    nr_below = len(nr_valid[nr_valid["cur_vs_nr_status"] == "BELOW"])
+    nr_equal = len(nr_valid[nr_valid["cur_vs_nr_status"] == "EQUAL"])
+    nr_total = len(nr_valid)
+    avg_nr_delta = nr_valid["cur_vs_nr_amt"].mean() if nr_total > 0 else 0
+    below_avg_nr = nr_valid.loc[nr_valid["cur_vs_nr_status"] == "BELOW", "cur_vs_nr_amt"].mean()
+    below_avg_nr = below_avg_nr if not math.isnan(below_avg_nr) else 0
+
+    summary_items = [
+        ("Codes with PHCC rate + CMS NR rate", nr_total),
+        ("PHCC ABOVE CMS NR", f"{nr_above}  ({nr_above/nr_total*100:.1f}%)" if nr_total else "0"),
+        ("PHCC BELOW CMS NR", f"{nr_below}  ({nr_below/nr_total*100:.1f}%)" if nr_total else "0"),
+        ("PHCC EQUAL to CMS NR", nr_equal),
+        ("Avg Δ all codes (Current − NR)", f"${avg_nr_delta:.2f}"),
+        ("Avg Δ codes BELOW NR only", f"${below_avg_nr:.2f}"),
+    ]
+    for label, val in summary_items:
+        ws.cell(row=row, column=1, value=label).font = BOLD_FONT
+        cell = ws.cell(row=row, column=2, value=val)
+        if isinstance(val, str) and "$" in val and "-" in val:
+            cell.fill = RED_FILL
+        row += 1
+
+    # ── By-State breakdown ──
+    row += 1
+    ws.cell(row=row, column=1, value="BY STATE — vs CMS NR").font = Font(bold=True, size=11, color="4472C4")
+    row += 1
+    for c, h in enumerate(["State", "Above NR", "Below NR", "Equal", "Avg Δ Below"], 1):
+        ws.cell(row=row, column=c, value=h).font = BOLD_FONT
+    row += 1
+    for state, grp in nr_valid.groupby("state"):
+        a = len(grp[grp["cur_vs_nr_status"] == "ABOVE"])
+        b = len(grp[grp["cur_vs_nr_status"] == "BELOW"])
+        e = len(grp[grp["cur_vs_nr_status"] == "EQUAL"])
+        bavg = grp.loc[grp["cur_vs_nr_status"] == "BELOW", "cur_vs_nr_amt"].mean()
+        ws.cell(row=row, column=1, value=state)
+        ws.cell(row=row, column=2, value=a)
+        ws.cell(row=row, column=3, value=b)
+        ws.cell(row=row, column=4, value=e)
+        ws.cell(row=row, column=5, value=round(bavg, 2) if not math.isnan(bavg) else 0)
+        ws.cell(row=row, column=5).number_format = CURRENCY_FMT
+        row += 1
+
+    # ── Detail table ──
+    row += 1
+    ws.cell(row=row, column=1,
+            value="DETAIL — PHCC Current Rate +/- CMS NR / Rural").font = Font(bold=True, size=12)
+    row += 1
+
+    if len(df) == 0:
+        ws.cell(row=row, column=1, value="No rows with both PHCC current rate and CMS benchmark.")
+        _auto_width(ws)
+        return
+
+    detail_cols = {
+        "state": "State",
+        "payer_group": "Payer",
+        "current_schedule_type": "Schedule",
+        "hcpcs_normalised": "HCPCS",
+        "modifier_current": "Mod",
+        "description_hcpcs_ref": "Description",
+        "current_rate_numeric": "PHCC Current",
+        "cms_benchmark_nr": "CMS NR",
+        "cur_vs_nr_amt": "Δ vs NR",
+        "cur_vs_nr_pct": "Δ% vs NR",
+        "cur_vs_nr_status": "Status NR",
+        "cms_benchmark_r": "CMS Rural",
+        "cur_vs_r_amt": "Δ vs Rural",
+        "cur_vs_r_pct": "Δ% vs Rural",
+        "cur_vs_r_status": "Status Rural",
+    }
+
+    src_cols = [c for c in detail_cols if c in df.columns]
+    headers = [detail_cols[c] for c in src_cols]
+
+    # Sort: below NR first (worst delta), then by HCPCS
+    df = df.sort_values(["cur_vs_nr_status", "cur_vs_nr_amt"],
+                        ascending=[True, True])
+
+    data_start = row
+    for c, h in enumerate(headers, 1):
+        cell = ws.cell(row=row, column=c, value=h)
+        cell.fill = HEADER_FILL
+        cell.font = HEADER_FONT
+        cell.alignment = Alignment(horizontal="center", wrap_text=True)
+        cell.border = THIN_BORDER
+    row += 1
+
+    for _, drow in df.iterrows():
+        for c, col_name in enumerate(src_cols, 1):
+            val = drow.get(col_name)
+            cell = ws.cell(row=row, column=c)
+            if isinstance(val, float) and math.isnan(val):
+                cell.value = None
+            elif isinstance(val, (np.floating,)):
+                cell.value = float(val) if not math.isnan(float(val)) else None
+            elif isinstance(val, (np.bool_, bool)):
+                cell.value = bool(val)
+            elif isinstance(val, (np.integer,)):
+                cell.value = int(val)
+            else:
+                cell.value = val
+            cell.border = THIN_BORDER
+        row += 1
+
+    max_data_row = row - 1
+
+    # Currency / pct formatting
+    currency_labels = {"PHCC Current", "CMS NR", "Δ vs NR", "CMS Rural", "Δ vs Rural"}
+    pct_labels = {"Δ% vs NR", "Δ% vs Rural"}
+    for c, h in enumerate(headers, 1):
+        if h in currency_labels:
+            _apply_currency_fmt(ws, c, max_data_row)
+        elif h in pct_labels:
+            _apply_pct_fmt(ws, c, max_data_row)
+
+    # Conditional fills on Status NR / Status Rural
+    nr_status_ci = headers.index("Status NR") + 1 if "Status NR" in headers else None
+    r_status_ci = headers.index("Status Rural") + 1 if "Status Rural" in headers else None
+    status_map = {
+        "ABOVE": GREEN_FILL, "BELOW": RED_FILL,
+        "EQUAL": GREEN_FILL, "NO_NR_RATE": GRAY_FILL,
+        "NO_RURAL_RATE": GRAY_FILL,
+    }
+    if nr_status_ci:
+        _apply_conditional_fill(ws, nr_status_ci, max_data_row, status_map)
+    if r_status_ci:
+        _apply_conditional_fill(ws, r_status_ci, max_data_row, status_map)
+
+    # Red fill on negative Δ vs NR cells
+    delta_nr_ci = headers.index("Δ vs NR") + 1 if "Δ vs NR" in headers else None
+    if delta_nr_ci:
+        for r in range(data_start + 1, max_data_row + 1):
+            v = ws.cell(row=r, column=delta_nr_ci).value
+            if v is not None and isinstance(v, (int, float)) and v < 0:
+                ws.cell(row=r, column=delta_nr_ci).fill = RED_FILL
+
+    ws.freeze_panes = ws.cell(row=data_start + 1, column=5)
+    ws.auto_filter.ref = f"A{data_start}:{get_column_letter(len(headers))}{max_data_row}"
+    _auto_width(ws)
+
+
+def _write_contract_lower_than_medicare(ws: Worksheet, primary: pd.DataFrame):
+    """
+    Executive-friendly sheet: PHCC contracted codes where the proposed
+    Integra rate falls below the CMS Medicare Non-Rural benchmark.
+    Includes a methodology summary at the top for quick decision-making.
+    """
+    # Filter: Medicare payer, primary match, proposed < CMS NR benchmark
+    filt = primary[
+        (primary["payer_group"] == "Medicare") &
+        (primary["benchmark_status_nr"] == "BELOW_BENCHMARK")
+    ].copy()
+
+    # ── Methodology Summary ──
+    ws.cell(row=1, column=1, value="Contract Lower Than Medicare Benchmark").font = Font(bold=True, size=14)
+    ws.cell(row=2, column=1, value=f"Generated: {datetime.now():%Y-%m-%d %H:%M}").font = Font(italic=True, size=10, color="666666")
+
+    row = 4
+    ws.cell(row=row, column=1, value="HOW THIS IS CALCULATED").font = Font(bold=True, size=12, color="C00000")
+    row += 1
+    method_lines = [
+        "1. Source: Integra PHP Medicare carveout proposed rates vs CMS 2026 Q1 DMEPOS Fee Schedule.",
+        "2. CMS Benchmark: Non-Rural (NR) rate is used as the primary Medicare floor.",
+        "3. Match: Each proposed HCPCS + modifier is matched to CMS using cascade B1→B4:",
+        "     B1 = exact modifier match, B2 = NU (purchase), B3 = RR (rental), B4 = blank.",
+        "4. Below Benchmark = Proposed rate is LESS than the CMS NR rate for that code.",
+        "5. Δ Amount = Proposed − CMS NR (negative means proposed is below floor).",
+        "6. Δ % = (Proposed − CMS NR) / CMS NR × 100.",
+        "7. Rural rate shown for reference — rural is typically higher than NR.",
+        "",
+        "ACTION: Codes listed here are priced BELOW the Medicare fee schedule floor.",
+        "These warrant negotiation review — the proposed rate undercuts public reimbursement.",
+    ]
+    for line in method_lines:
+        ws.cell(row=row, column=1, value=line).font = Font(size=10)
+        row += 1
+
+    # ── Quick Summary Stats ──
+    row += 1
+    ws.cell(row=row, column=1, value="SUMMARY").font = Font(bold=True, size=12, color="4472C4")
+    row += 1
+
+    total_medicare_primary = len(primary[primary["payer_group"] == "Medicare"])
+    below_count = len(filt)
+    below_pct = (below_count / total_medicare_primary * 100) if total_medicare_primary > 0 else 0
+
+    # Average shortfall
+    filt_numeric = filt["delta_vs_cms_nr"].dropna()
+    avg_shortfall = filt_numeric.mean() if len(filt_numeric) > 0 else 0
+    total_shortfall = filt_numeric.sum() if len(filt_numeric) > 0 else 0
+
+    summary_items = [
+        ("Total Medicare primary comparisons", total_medicare_primary),
+        ("Codes BELOW CMS NR Benchmark", below_count),
+        ("% Below Benchmark", f"{below_pct:.1f}%"),
+        ("Average shortfall per code (Proposed − CMS NR)", f"${avg_shortfall:.2f}"),
+        ("Total shortfall across all codes", f"${total_shortfall:.2f}"),
+    ]
+    for label, val in summary_items:
+        ws.cell(row=row, column=1, value=label).font = BOLD_FONT
+        cell = ws.cell(row=row, column=2, value=val)
+        if isinstance(val, str) and "$" in val and "-" in val:
+            cell.fill = RED_FILL
+        row += 1
+
+    # ── By State breakdown ──
+    row += 1
+    ws.cell(row=row, column=1, value="BY STATE").font = Font(bold=True, size=11, color="4472C4")
+    row += 1
+    for c, h in enumerate(["State", "Below CMS NR", "Avg Δ", "Total Δ"], 1):
+        ws.cell(row=row, column=c, value=h).font = BOLD_FONT
+    row += 1
+    if len(filt) > 0:
+        for state, grp in filt.groupby("state"):
+            deltas = grp["delta_vs_cms_nr"].dropna()
+            ws.cell(row=row, column=1, value=state)
+            ws.cell(row=row, column=2, value=len(grp))
+            ws.cell(row=row, column=3, value=round(deltas.mean(), 2) if len(deltas) > 0 else 0)
+            ws.cell(row=row, column=3).number_format = CURRENCY_FMT
+            ws.cell(row=row, column=4, value=round(deltas.sum(), 2) if len(deltas) > 0 else 0)
+            ws.cell(row=row, column=4).number_format = CURRENCY_FMT
+            row += 1
+
+    # ── Data Table ──
+    row += 1
+    ws.cell(row=row, column=1, value="DETAIL — Codes Below Medicare Benchmark").font = Font(bold=True, size=12)
+    row += 1
+
+    if len(filt) == 0:
+        ws.cell(row=row, column=1, value="No proposed rates below CMS Medicare NR benchmark.")
+        _auto_width(ws)
+        return
+
+    # Slim columns for exec readability
+    detail_cols = {
+        "state": "State",
+        "hcpcs_normalised": "HCPCS",
+        "modifier_proposed": "Mod",
+        "description_hcpcs_ref": "Description",
+        "proposed_rate_numeric": "Proposed Rate",
+        "cms_benchmark_nr": "CMS NR Rate",
+        "delta_vs_cms_nr": "Δ Amount",
+        "pct_delta_vs_cms_nr": "Δ %",
+        "cms_benchmark_r": "CMS Rural Rate",
+        "benchmark_status_r": "vs Rural",
+        "current_rate_numeric": "PHCC Current",
+        "cms_benchmark_match_tier": "CMS Match",
+    }
+
+    headers = list(detail_cols.values())
+    src_cols = list(detail_cols.keys())
+    src_cols = [c for c in src_cols if c in filt.columns]
+    headers = [detail_cols[c] for c in src_cols]
+
+    # Sort by shortfall (worst first)
+    filt = filt.sort_values("delta_vs_cms_nr", ascending=True)
+
+    # Write headers
+    data_start_row = row
+    for c, h in enumerate(headers, 1):
+        cell = ws.cell(row=row, column=c, value=h)
+        cell.fill = HEADER_FILL
+        cell.font = HEADER_FONT
+        cell.alignment = Alignment(horizontal="center", wrap_text=True)
+        cell.border = THIN_BORDER
+    row += 1
+
+    # Write data
+    for _, drow in filt.iterrows():
+        for c, col_name in enumerate(src_cols, 1):
+            val = drow.get(col_name)
+            cell = ws.cell(row=row, column=c)
+            if isinstance(val, float) and math.isnan(val):
+                cell.value = None
+            elif isinstance(val, (np.floating,)):
+                cell.value = float(val) if not math.isnan(float(val)) else None
+            elif isinstance(val, (np.bool_, bool)):
+                cell.value = bool(val)
+            elif isinstance(val, (np.integer,)):
+                cell.value = int(val)
+            else:
+                cell.value = val
+            cell.border = THIN_BORDER
+        row += 1
+
+    max_data_row = row - 1
+
+    # Currency formatting on rate/delta columns
+    currency_labels = {"Proposed Rate", "CMS NR Rate", "Δ Amount", "CMS Rural Rate", "PHCC Current"}
+    pct_labels = {"Δ %"}
+    for c, h in enumerate(headers, 1):
+        if h in currency_labels:
+            _apply_currency_fmt(ws, c, max_data_row)
+        elif h in pct_labels:
+            _apply_pct_fmt(ws, c, max_data_row)
+
+    # Red fill on Δ Amount column (all negative)
+    delta_ci = headers.index("Δ Amount") + 1 if "Δ Amount" in headers else None
+    if delta_ci:
+        for r in range(data_start_row + 1, max_data_row + 1):
+            ws.cell(row=r, column=delta_ci).fill = RED_FILL
+
+    # Conditional on vs Rural
+    rural_ci = headers.index("vs Rural") + 1 if "vs Rural" in headers else None
+    if rural_ci:
+        _apply_conditional_fill(ws, rural_ci, max_data_row, {
+            "BELOW_BENCHMARK": RED_FILL,
+            "ABOVE_BENCHMARK": GREEN_FILL,
+            "NO_RURAL_RATE": GRAY_FILL,
+        })
+
+    # Freeze at data table headers
+    ws.freeze_panes = ws.cell(row=data_start_row + 1, column=3)
+
+    # Auto-filter on data table
+    ws.auto_filter.ref = f"A{data_start_row}:{get_column_letter(len(headers))}{max_data_row}"
+
+    _auto_width(ws)
 
 
 def _write_executive_summary(ws: Worksheet, master: pd.DataFrame):
