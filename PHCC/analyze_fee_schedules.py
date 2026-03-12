@@ -28,6 +28,7 @@ log = logging.getLogger(__name__)
 # PATHS
 # ════════════════════════════════════════════════════════════════════════
 BASE = Path(__file__).resolve().parent / "data"
+CONTRACT = BASE / "Contract"
 INTEGRA = BASE / "INTEGRA_PHP_FFS"
 OUT_DIR = Path(__file__).resolve().parent / "output"
 OUT_DIR.mkdir(exist_ok=True)
@@ -37,8 +38,8 @@ FILES = {
     "integra_medicare":   INTEGRA / "Integra_PHP_CARVEOUTS_MEDICARE.csv",
     "integra_medicaid":   INTEGRA / "INTEGRA_PHP_CARVEOUTS_MEDICAID.csv",
     "integra_aso":        INTEGRA / "Integra_PHP_CARVEOUTS_ASO.csv",
-    "phcc_or":            BASE / "PHCC_OR_CONTRACTED.csv",
-    "phcc_wa":            BASE / "PHCC_WA_PARTICIPATING.csv",
+    "phcc_or":            CONTRACT / "PHCC_OR_CONTRACTED.csv",
+    "phcc_wa":            CONTRACT / "PHCC_WA_PARTICIPATING.csv",
     "cms_or":             BASE / "CMS_2026_Q1_OR.csv",
     "cms_wa":             BASE / "CMS_2026_Q1_WA.csv",
     "oha":                BASE / "OHA_FFS_09_2025_RAW.csv",

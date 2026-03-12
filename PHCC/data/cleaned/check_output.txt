@@ -1,0 +1,137 @@
+=== K0 ARTIFACT FOR MANUAL REVIEW ===
+scanned_value corrected_to confidence                                       description_match_note  manual_verified
+        KOOO?        K0007       HIGH       Description matches K0007 'Manual WC extra-heavy duty'              NaN
+        KOO17        K0017       HIGH          OΓåÆ0: Detachable, non-adjustable height armrest base              NaN
+        KOO18        K0018       HIGH             OΓåÆ0: Detachable, adjustable height armrest upper              NaN
+        KOO19        K0019       HIGH                                                 OΓåÆ0: Arm pad              NaN
+        KOO2O        K0020       HIGH                    OΓåÆ0: Fixed adjustable height armrest pair              NaN
+        KOO37        K0037       HIGH                             OΓåÆ0: High mount flip-up footrest              NaN
+        KOO38        K0038       HIGH                                          OΓåÆ0: Leg strap each              NaN
+        KOO39        K0039       HIGH                                  OΓåÆ0: Leg strap h style each              NaN
+        KOO4O        K0040       HIGH                              OΓåÆ0: Adjustable angle footplate              NaN
+        KOO41        K0041       HIGH                               OΓåÆ0: Large size footplate each              NaN
+        KOO42        K0042       HIGH                            OΓåÆ0: Standard size footplate each              NaN
+        KOO43        K0043       HIGH                           OΓåÆ0: Footrest lower extension tube              NaN
+        KOO44        K0044       HIGH                           OΓåÆ0: Footrest upper hanger bracket              NaN
+        KOO45        K0045       HIGH                              OΓåÆ0: Footrest complete assembly              NaN
+        KOO46        K0046       HIGH                       OΓåÆ0: Elevating legrest lower extension              NaN
+        KOO47        K0047       HIGH                  OΓåÆ0: Elevating legrest upper hanger bracket              NaN
+        KOO5O        K0050       HIGH                                        OΓåÆ0: Ratchet assembly              NaN
+        KOO51        K0051       HIGH                                    OΓåÆ0: Cam release assembly              NaN
+        KOO52        K0052       HIGH                           OΓåÆ0: Swingaway detachable footrest              NaN
+        KOO53        K0053       HIGH                         OΓåÆ0: Elevating footrest articulating              NaN
+        KOO56        K0056       HIGH                          OΓåÆ0: Seat height under 17in / 21in+              NaN
+        KOO65        K0065       HIGH                                        OΓåÆ0: Spoke protectors              NaN
+        KOO69        K0069       HIGH                OΓåÆ0: Rear wheel assembly complete, solid tire              NaN
+        KOO7O        K0070       HIGH                 OΓåÆ0: Rear wheel assembly complete, pneumatic              NaN
+        KOO71        K0071       HIGH                   OΓåÆ0: Front caster assembly, pneumatic tire              NaN
+        KOO72        K0072       HIGH                   OΓåÆ0: Front caster assembly, semi-pneumatic              NaN
+        KOO73        K0073       HIGH                                         OΓåÆ0: Caster pin lock              NaN
+        KOO??        K0074     MEDIUM Guessed from description 'Front caster assembly, solid tire'              NaN
+        KOO98        K0098       HIGH                         OΓåÆ0: Drive belt power for wheelchair              NaN
+        KO1O5        K0105       HIGH                                               OΓåÆ0: IV hanger              NaN
+        KO1O8        K0108       HIGH                              OΓåÆ0: WC component/accessory NOS              NaN
+        KO195        K0195       HIGH                                      OΓåÆ0: Elevating legrests              NaN
+        KO462        K0462       HIGH           OΓåÆ0: Temporary replacement for patient owned equip              NaN
+        KO739        K0739       HIGH                                        OΓåÆ0: Labor repair DME              NaN
+        KO8OO        K0800       HIGH                                    OΓåÆ0: POV group 1 standard              NaN
+        KO8O1        K0801       HIGH                                  OΓåÆ0: POV group 1 heavy duty              NaN
+
+=== ALL AUDIT ISSUES BY TYPE ===
+issue_type
+OCR_CORRECTED            37
+TRAILING_DASH_REMOVED     6
+MALFORMED_RANGE           3
+INVALID                   3
+JUNK_CHARS_REMOVED        1
+MULTILINE_CLEANED         1
+
+=== STILL INVALID (not fixed) ===
+          source_file  source_row hcpcs_original hcpcs_normalised                         issue_detail
+PHCC_WA_PARTICIPATING         201  E-1035 -\n---     E-1035 - --- Could not normalise: 'E-1035 -\n---'
+PHCC_WA_PARTICIPATING         344          KOO?O            KOO?O         Could not normalise: 'KOO?O'
+PHCC_WA_PARTICIPATING         362          KOSO?            KOSO?         Could not normalise: 'KOSO?'
+
+=== RANGE EXPANSIONS ===
+          source_file  source_row hcpcs_original expanded_code range_start range_end
+   PHCC_OR_CONTRACTED         156  E2624 - E2625         E2624       E2624     E2625
+   PHCC_OR_CONTRACTED         156  E2624 - E2625         E2625       E2624     E2625
+PHCC_OR_PARTICIPATING          54    A7520-A7522         A7520       A7520     A7522
+PHCC_OR_PARTICIPATING          54    A7520-A7522         A7521       A7520     A7522
+PHCC_OR_PARTICIPATING          54    A7520-A7522         A7522       A7520     A7522
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6530       A6530     A6541
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6531       A6530     A6541
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6532       A6530     A6541
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6533       A6530     A6541
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6534       A6530     A6541
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6535       A6530     A6541
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6536       A6530     A6541
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6537       A6530     A6541
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6538       A6530     A6541
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6539       A6530     A6541
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6540       A6530     A6541
+PHCC_WA_PARTICIPATING          27 A6530 -\nA6541         A6541       A6530     A6541
+PHCC_WA_PARTICIPATING          28    A6544-A6549         A6544       A6544     A6549
+PHCC_WA_PARTICIPATING          28    A6544-A6549         A6545       A6544     A6549
+PHCC_WA_PARTICIPATING          28    A6544-A6549         A6546       A6544     A6549
+PHCC_WA_PARTICIPATING          28    A6544-A6549         A6547       A6544     A6549
+PHCC_WA_PARTICIPATING          28    A6544-A6549         A6548       A6544     A6549
+PHCC_WA_PARTICIPATING          28    A6544-A6549         A6549       A6544     A6549
+PHCC_WA_PARTICIPATING         195  E1017 - E1018         E1017       E1017     E1018
+PHCC_WA_PARTICIPATING         195  E1017 - E1018         E1018       E1017     E1018
+PHCC_WA_PARTICIPATING         235  E2216-\nE2218         E2216       E2216     E2218
+PHCC_WA_PARTICIPATING         235  E2216-\nE2218         E2217       E2216     E2218
+PHCC_WA_PARTICIPATING         235  E2216-\nE2218         E2218       E2216     E2218
+PHCC_WA_PARTICIPATING         246    E2291-E2295         E2291       E2291     E2295
+PHCC_WA_PARTICIPATING         246    E2291-E2295         E2292       E2291     E2295
+PHCC_WA_PARTICIPATING         246    E2291-E2295         E2293       E2291     E2295
+PHCC_WA_PARTICIPATING         246    E2291-E2295         E2294       E2291     E2295
+PHCC_WA_PARTICIPATING         246    E2291-E2295         E2295       E2291     E2295
+PHCC_WA_PARTICIPATING         301  E2601 - E2610         E2601       E2601     E2610
+PHCC_WA_PARTICIPATING         301  E2601 - E2610         E2602       E2601     E2610
+PHCC_WA_PARTICIPATING         301  E2601 - E2610         E2603       E2601     E2610
+PHCC_WA_PARTICIPATING         301  E2601 - E2610         E2604       E2601     E2610
+PHCC_WA_PARTICIPATING         301  E2601 - E2610         E2605       E2601     E2610
+PHCC_WA_PARTICIPATING         301  E2601 - E2610         E2606       E2601     E2610
+PHCC_WA_PARTICIPATING         301  E2601 - E2610         E2607       E2601     E2610
+PHCC_WA_PARTICIPATING         301  E2601 - E2610         E2608       E2601     E2610
+PHCC_WA_PARTICIPATING         301  E2601 - E2610         E2609       E2601     E2610
+PHCC_WA_PARTICIPATING         301  E2601 - E2610         E2610       E2601     E2610
+PHCC_WA_PARTICIPATING         302  E2611 - E2621         E2611       E2611     E2621
+PHCC_WA_PARTICIPATING         302  E2611 - E2621         E2612       E2611     E2621
+PHCC_WA_PARTICIPATING         302  E2611 - E2621         E2613       E2611     E2621
+PHCC_WA_PARTICIPATING         302  E2611 - E2621         E2614       E2611     E2621
+PHCC_WA_PARTICIPATING         302  E2611 - E2621         E2615       E2611     E2621
+PHCC_WA_PARTICIPATING         302  E2611 - E2621         E2616       E2611     E2621
+PHCC_WA_PARTICIPATING         302  E2611 - E2621         E2617       E2611     E2621
+PHCC_WA_PARTICIPATING         302  E2611 - E2621         E2618       E2611     E2621
+PHCC_WA_PARTICIPATING         302  E2611 - E2621         E2619       E2611     E2621
+PHCC_WA_PARTICIPATING         302  E2611 - E2621         E2620       E2611     E2621
+PHCC_WA_PARTICIPATING         302  E2611 - E2621         E2621       E2611     E2621
+PHCC_WA_PARTICIPATING         303  E2622 - E2623         E2622       E2622     E2623
+PHCC_WA_PARTICIPATING         303  E2622 - E2623         E2623       E2622     E2623
+PHCC_WA_PARTICIPATING         304  E2624 - E2625         E2624       E2624     E2625
+PHCC_WA_PARTICIPATING         304  E2624 - E2625         E2625       E2624     E2625
+
+=== SAMPLE: CLEANED K-CODES (first 20) ===
+hcpcs_original hcpcs_normalised  hcpcs_is_valid hcpcs_issue_type modifier_normalised
+         K0001            K0001            True              NaN                  NU
+         K0001            K0001            True              NaN                  RR
+         K0002            K0002            True              NaN                  NU
+         K0002            K0002            True              NaN                  RR
+         K0003            K0003            True              NaN                  NU
+         K0003            K0003            True              NaN                  RR
+         K0004            K0004            True              NaN                  NU
+         K0004            K0004            True              NaN                  RR
+         K0005            K0005            True              NaN                  NU
+         K0005            K0005            True              NaN                  RR
+         K0006            K0006            True              NaN                  NU
+         K0006            K0006            True              NaN                  RR
+         KOOO?            K0007            True    OCR_CORRECTED                  NU
+         KOOO?            K0007            True    OCR_CORRECTED                  RR
+         K0009            K0009            True              NaN                  NU
+         K0015            K0015            True              NaN                  NU
+         KOO17            K0017            True    OCR_CORRECTED                  NU
+         KOO18            K0018            True    OCR_CORRECTED                  NU
+         KOO19            K0019            True    OCR_CORRECTED                  NU
+         KOO2O            K0020            True    OCR_CORRECTED                  NU
