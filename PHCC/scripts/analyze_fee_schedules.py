@@ -311,7 +311,7 @@ def load_hcpcs_descriptions(path: Path) -> dict[str, str]:
 # 3.  PHCC LOOKUP BUILDER
 # ───────────────────────────────────────────────────────────────────────
 
-def build_phcc_lookup(df: pd.DataFrame) -> dict[str, list[pd.Series]]:
+def build_phcc_lookup(df: pd.DataFrame):
     """
     Build dict keyed by 'HCPCS|MOD' → list of matching rows.
     Also build a code-only index: 'HCPCS' → list of rows.
