@@ -959,7 +959,7 @@ def main():
 
     # Write XLSX
     print("\n[5] Writing Excel workbook…")
-    out_path = OUTPUT / "integra_rate_analysis.xlsx"
+    out_path = OUTPUT / "integra_rate_analysis_v2.xlsx"
     wb = Workbook()
 
     # Tab 1: Executive Summary
