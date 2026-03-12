@@ -29,6 +29,7 @@ log = logging.getLogger(__name__)
 # ════════════════════════════════════════════════════════════════════════
 BASE = Path(__file__).resolve().parent / "data"
 CONTRACT = BASE / "Contract"
+CMS = BASE / "cms"
 INTEGRA = BASE / "INTEGRA_PHP_FFS"
 OUT_DIR = Path(__file__).resolve().parent / "output"
 OUT_DIR.mkdir(exist_ok=True)
@@ -40,10 +41,10 @@ FILES = {
     "integra_aso":        INTEGRA / "Integra_PHP_CARVEOUTS_ASO.csv",
     "phcc_or":            CONTRACT / "PHCC_OR_CONTRACTED.csv",
     "phcc_wa":            CONTRACT / "PHCC_WA_PARTICIPATING.csv",
-    "cms_or":             BASE / "CMS_2026_Q1_OR.csv",
-    "cms_wa":             BASE / "CMS_2026_Q1_WA.csv",
-    "oha":                BASE / "OHA_FFS_09_2025_RAW.csv",
-    "hcpcs_ref":          BASE / "2026_CMS_HCPCS.csv",
+    "cms_or":             CMS / "CMS_2026_Q1_OR.csv",
+    "cms_wa":             CMS / "CMS_2026_Q1_WA.csv",
+    "oha":                CMS / "OHA_FFS_09_2025_RAW.csv",
+    "hcpcs_ref":          CMS / "2026_CMS_HCPCS.csv",
 }
 
 VALID_HCPCS = re.compile(r"^[A-Z][0-9]{4}$")
