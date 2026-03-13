@@ -149,6 +149,15 @@ def _in_range(code: str, start: str, end: str) -> bool:
     except ValueError:
         return False
 
+def _to_num(s: str):
+    """Convert string to float if numeric, otherwise return original string."""
+    if not s:
+        return ""
+    try:
+        return float(s.replace("$", "").replace(",", ""))
+    except (ValueError, TypeError):
+        return s
+
 CROSS_MOD = {"NU": ["RR", ""], "RR": ["NU", ""], "AU": ["NU", ""],
              "KF": ["NU", ""], "": ["NU", "RR"]}
 
@@ -680,10 +689,10 @@ def build_contract_view(
                     "Mod":                  mod,
                     "Description":          desc_raw,
                     "Billing Unit":         unit_raw,
-                    "Managed Rental":       mgd_rent if mod == "RR" else "",
-                    "Managed Purchase":     mgd_purch if mod == "NU" else "",
-                    "Commercial Rental":    com_rent if mod == "RR" else "",
-                    "Commercial Purchase":  com_purch if mod == "NU" else "",
+                    "Managed Rental":       _to_num(mgd_rent) if mod == "RR" else "",
+                    "Managed Purchase":     _to_num(mgd_purch) if mod == "NU" else "",
+                    "Commercial Rental":    _to_num(com_rent) if mod == "RR" else "",
+                    "Commercial Purchase":  _to_num(com_purch) if mod == "NU" else "",
                     "Comments":             comments,
                     # --- Comparison ---
                     "Managed $":            mgd_num,
@@ -704,8 +713,8 @@ def build_contract_view(
                     "Mod":                  mod,
                     "Description":          desc_raw,
                     "Billing Unit":         unit_raw,
-                    "Rental Rate":          rent_raw if mod == "RR" else "",
-                    "Purchase Rate":        purch_raw if mod == "NU" else "",
+                    "Rental Rate":          _to_num(rent_raw) if mod == "RR" else "",
+                    "Purchase Rate":        _to_num(purch_raw) if mod == "NU" else "",
                     "Comments":             comments,
                     # --- Comparison ---
                     "Current $":            cur_num,

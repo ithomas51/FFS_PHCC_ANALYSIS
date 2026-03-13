@@ -91,6 +91,15 @@ def _classify_note(raw_val: str):
         return np.nan, s
 
 
+def _to_num(s: str):
+    """Convert string to float if numeric, otherwise return original string."""
+    if not s:
+        return ""
+    try:
+        return float(s.replace("$", "").replace(",", ""))
+    except (ValueError, TypeError):
+        return s
+
 def _resolve_pct_of_medicare(note_detail: str, cms_nr: float) -> float:
     m = MEDICARE_PCT_RE.search(str(note_detail))
     if m and not math.isnan(cms_nr):
@@ -495,10 +504,10 @@ def build_contract_view(
                 "Mod":             mod,
                 "Description":     desc_raw,
                 "Billing Unit":    unit_raw,
-                "Managed Rental":  mgd_rent if slot == "RR" else "",
-                "Managed Purchase": mgd_purch if slot == "NU" else "",
-                "Commercial Rental": com_rent if slot == "RR" else "",
-                "Commercial Purchase": com_purch if slot == "NU" else "",
+                "Managed Rental":  _to_num(mgd_rent) if slot == "RR" else "",
+                "Managed Purchase": _to_num(mgd_purch) if slot == "NU" else "",
+                "Commercial Rental": _to_num(com_rent) if slot == "RR" else "",
+                "Commercial Purchase": _to_num(com_purch) if slot == "NU" else "",
                 "Comments":        comments,
                 # --- Comparison columns (right) ---
                 "Centrix Rate":      cx_rate,

@@ -1,0 +1,63 @@
+
+============================================================
+Running scripts/integra_rate_analysis_v2.py
+============================================================
+Rate Analysis  v2
+Run: 2026-03-13 07:28
+======================================================================
+
+[1] Loading PHCC cleaned schedules∩┐╜
+    PHCC_OR_CONTRACTED: 330 rows, 0 range entries
+    PHCC_OR_PARTICIPATING: 199 rows, 0 range entries
+    PHCC_WA_PARTICIPATING: 530 rows, 3 range entries
+
+[2] Loading Integra proposed∩┐╜
+    integra_commercial: 1078 rows
+    integra_aso: 1078 rows
+    integra_medicare: 1078 rows
+    integra_medicaid: 1078 rows
+
+[3] Loading benchmarks∩┐╜
+    CMS OR: 2728 keys, CMS WA: 2728 keys
+    OHA: 5181 keys, HCPCS descriptions: 8623
+
+[4] Building comparison tables∩┐╜
+    Commercial: 3234 rows, 884 matched (196 range), 136 below CMS floor, 67 below current
+    ASO: 3234 rows, 884 matched (196 range), 146 below CMS floor, 67 below current
+    Medicare: 3234 rows, 884 matched (196 range), 146 below CMS floor, 73 below current
+    Medicaid: 3234 rows, 884 matched (196 range), 161 below CMS floor, 99 below current
+
+[5] Building Integra lookup for Contract View∩┐╜
+    Integra lookup: 1071 HCPCS|Mod keys
+
+[6] Building Contract View tabs∩┐╜
+    CV OR Contracted: 269 raw rows -> 284 view rows
+    CV OR Participating: 156 raw rows -> 192 view rows
+    CV WA Participating: 423 raw rows -> 468 view rows
+
+[7] Writing Excel workbook∩┐╜
+    Tab: Commercial ∩┐╜ 3234 rows
+    Tab: ASO ∩┐╜ 3234 rows
+    Tab: Medicare ∩┐╜ 3234 rows
+    Tab: Medicaid ∩┐╜ 3234 rows
+    Tab: CV OR Contracted ∩┐╜ 284 rows
+    Tab: CV OR Participating ∩┐╜ 192 rows
+    Tab: CV WA Participating ∩┐╜ 468 rows
+
+STDERR: loads\FFS_PHCC_ANALYSIS\PHCC\scripts\integra_rate_analysis_v2.py", line 1328, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\ithom\Downloads\FFS_PHCC_ANALYSIS\PHCC\scripts\integra_rate_analysis_v2.py", line 1318, in main
+    wb.save(out_path)
+    ~~~~~~~^^^^^^^^^^
+  File "C:\Users\ithom\AppData\Local\Programs\Python\Python313\Lib\site-packages\openpyxl\workbook\workbook.py", line 386, in save
+    save_workbook(self, filename)
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "C:\Users\ithom\AppData\Local\Programs\Python\Python313\Lib\site-packages\openpyxl\writer\excel.py", line 291, in save_workbook
+    archive = ZipFile(filename, 'w', ZIP_DEFLATED, allowZip64=True)
+  File "C:\Users\ithom\AppData\Local\Programs\Python\Python313\Lib\zipfile\__init__.py", line 1383, in __init__
+    self.fp = io.open(file, filemode)
+              ~~~~~~~^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: 'C:\\Users\\ithom\\Downloads\\FFS_PHCC_ANALYSIS\\PHCC\\output\\integra_rate_analysis_v2.xlsx'
+
+FAILED (rc=1)

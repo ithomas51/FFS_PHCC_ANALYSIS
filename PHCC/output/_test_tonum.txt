@@ -1,0 +1,45 @@
+=== Testing _to_num in each script ===
+
+--- v2 ---
+  '74.5'                    -> 74.5                 (float)
+  '70.65'                   -> 70.65                (float)
+  'Retail less 36%'         -> 'Retail less 36%'    (str)
+  '174.4'                   -> 174.4                (float)
+  '28'                      -> 28.0                 (float)
+  '2.8'                     -> 2.8                  (float)
+  '110.35'                  -> 110.35               (float)
+  '77'                      -> 77.0                 (float)
+  '34.85'                   -> 34.85                (float)
+  '$1,234.56'               -> 1234.56              (float)
+  ''                        -> ''                   (str)
+  '0'                       -> 0.0                  (float)
+
+--- v2_formulas ---
+  '74.5'                    -> 74.5                 (float)
+  '70.65'                   -> 70.65                (float)
+  'Retail less 36%'         -> 'Retail less 36%'    (str)
+  '174.4'                   -> 174.4                (float)
+  '28'                      -> 28.0                 (float)
+  '2.8'                     -> 2.8                  (float)
+  '110.35'                  -> 110.35               (float)
+  '77'                      -> 77.0                 (float)
+  '34.85'                   -> 34.85                (float)
+  '$1,234.56'               -> 1234.56              (float)
+  ''                        -> ''                   (str)
+  '0'                       -> 0.0                  (float)
+
+--- centrix ---
+  '74.5'                    -> 74.5                 (float)
+  '70.65'                   -> 70.65                (float)
+  'Retail less 36%'         -> 'Retail less 36%'    (str)
+  '174.4'                   -> 174.4                (float)
+  '28'                      -> 28.0                 (float)
+  '2.8'                     -> 2.8                  (float)
+  '110.35'                  -> 110.35               (float)
+  '77'                      -> 77.0                 (float)
+  '34.85'                   -> 34.85                (float)
+  '$1,234.56'               -> 1234.56              (float)
+  ''                        -> ''                   (str)
+  '0'                       -> 0.0                  (float)
+
+=== All _to_num tests passed ===

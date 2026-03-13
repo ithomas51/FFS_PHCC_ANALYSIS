@@ -1,0 +1,44 @@
+Tabs: ['Executive Summary', 'Commercial', 'ASO', 'Medicare', 'Medicaid', 'CV OR Contracted', 'CV OR Participating', 'CV WA Participating']
+
+=== Commercial tab ===
+Row 1 (header): ['State', 'Schedule', 'HCPCS', 'Mod', 'Description', 'Proposed Rate', 'PHCC Current', '╬ö ProposedΓÇôPHCC', '╬ö%', 'CMS NR', 'CMS Rural', 'ProposedΓÇôCMS NR', 'PHCCΓÇôCMS NR', 'Flag', 'Match', 'PHCC Raw', 'Note', None]
+Row 2 (first data):
+  State: 'OR'
+  Schedule: 'OR_PARTICIPATING'
+  HCPCS: 'A4595'
+  Mod: None
+  Description: 'Tens suppl 2 lead per month'
+  Proposed Rate: 11.1
+  PHCC Current: 23.95
+  ╬ö ProposedΓÇôPHCC: '=IF(OR(F2="",G2=""),"",F2-G2)'
+  ╬ö%: '=IF(OR(F2="",G2="",G2=0),"",(F2-G2)/G2*100)'
+  CMS NR: 11.4
+  CMS Rural: 27.22
+  ProposedΓÇôCMS NR: '=IF(OR(F2="",J2=""),"",F2-J2)'
+  PHCCΓÇôCMS NR: '=IF(OR(G2="",J2=""),"",G2-J2)'
+  Flag: 'BELOW CMS FLOOR'
+  Match: 'T3'
+  PHCC Raw: '23.95'
+  Note: None
+  None: None
+
+Row 3 formulas check:
+  ╬ö ProposedΓÇôPHCC: row2='=IF(OR(F2="",G2=""),"",F2-G2)', row3='=IF(OR(F3="",G3=""),"",F3-G3)'
+  ╬ö%: row2='=IF(OR(F2="",G2="",G2=0),"",(F2-G2)/G2*100)', row3='=IF(OR(F3="",G3="",G3=0),"",(F3-G3)/G3*100)'
+  ProposedΓÇôCMS NR: row2='=IF(OR(F2="",J2=""),"",F2-J2)', row3='=IF(OR(F3="",J3=""),"",F3-J3)'
+  PHCCΓÇôCMS NR: row2='=IF(OR(G2="",J2=""),"",G2-J2)', row3='=IF(OR(G3="",J3=""),"",G3-J3)'
+
+A1 = 'State'
+A2 = 'OR'
+Max row: 3266
+Summary starts at row 3237: Integra Commercial ΓÇö Rate Analysis Summary
+
+=== CV OR Contracted ===
+Headers: ['HCPCS', 'Mod', 'Description', 'Billing Unit', 'Managed Rental', 'Managed Purchase', 'Commercial Rental', 'Commercial Purchase', 'Comments', 'Managed $', 'Commercial $', 'Integra Comm', 'Integra ASO', 'Integra Medicare', 'Integra Medicaid', 'CMS NR', 'OHA Rate', '╬ö IntegraΓÇôCurrent', '╬ö%', 'Flag', None]
+Row 2 sample:
+  Integra Comm: None
+  Integra ASO: None
+  Integra Medicare: None
+  Integra Medicaid: 2358.51
+  ╬ö IntegraΓÇôCurrent: '=IF(OR(L2="",K2=""),"",L2-K2)'
+  ╬ö%: '=IF(OR(L2="",K2="",K2=0),"",(L2-K2)/K2*100)'

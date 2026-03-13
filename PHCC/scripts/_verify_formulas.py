@@ -1,4 +1,6 @@
 """Verify formulas XLSX: check that formula columns contain XL formulas, not static values."""
+import sys, io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
 from openpyxl import load_workbook
 
 wb = load_workbook("output/integra_rate_analysis_v2_formulas.xlsx")
