@@ -204,7 +204,7 @@ def load_hcpcs_desc(path: Path) -> dict:
 
 
 # =====================================================================
-# 3.  BUILD ANALYSIS TABLE  (Centrix vs CMS / OHA only)
+# 3.  BUILD SPLIT TABLES  (one per sheet)
 # =====================================================================
 
 def _delta(a: float, b: float):
@@ -215,125 +215,158 @@ def _delta(a: float, b: float):
     return d, p
 
 
-def _flag(proposed: float, cms_nr: float, oha: float,
-          proposed_note: str) -> str:
-    """Decision flag for one modifier slot (Centrix vs CMS)."""
+def _flag(proposed: float, benchmark: float, proposed_note: str) -> str:
     if math.isnan(proposed) and proposed_note:
-        return "NON-NUMERIC PROPOSED"
+        return "NON-NUMERIC"
     if math.isnan(proposed):
         return ""
-    if math.isnan(cms_nr):
-        return "NO CMS RATE"
-    d = proposed - cms_nr
-    pct = (d / cms_nr * 100) if cms_nr != 0 else 0.0
+    if math.isnan(benchmark):
+        return "NO BENCHMARK"
+    d = proposed - benchmark
+    pct = (d / benchmark * 100) if benchmark != 0 else 0.0
     if abs(pct) <= TOLERANCE_PCT:
-        return "AT CMS"
-    if proposed > cms_nr:
-        return "ABOVE CMS"
-    return "BELOW CMS"
+        return "AT BENCHMARK"
+    if proposed > benchmark:
+        return "ABOVE"
+    return "BELOW"
 
 
-def build_table(
-    centrix_lk: dict,
-    centrix_meta: dict,
-    cms_or: dict,
-    oha_lk: dict,
-    hcpcs_desc: dict,
-) -> pd.DataFrame:
-    """One row per Centrix HCPC code with NU + RR vs CMS/OHA."""
+def build_all_tables(
+    centrix_lk, centrix_meta, cms_or, oha_lk, hcpcs_desc,
+) -> dict:
+    """Return dict of sheet_name -> DataFrame."""
 
-    rows = []
+    centrix_rows = []
+    cms_rows = []
+    oha_rows = []
+    cms_cmp_rows = []
+    oha_cmp_rows = []
+    flag_rows = []
+
     for hcpcs in sorted(centrix_lk.keys()):
-        cx = centrix_lk[hcpcs]
+        cx   = centrix_lk[hcpcs]
+        cm   = centrix_meta.get(hcpcs, {})
+        desc = hcpcs_desc.get(hcpcs, "")
+
         cx_nu      = cx.get("NU", np.nan)
         cx_rr      = cx.get("RR", np.nan)
-        cx_nu_raw  = cx.get("NU_raw", "")
-        cx_rr_raw  = cx.get("RR_raw", "")
         cx_nu_note = cx.get("NU_note", "")
         cx_rr_note = cx.get("RR_note", "")
 
-        cm = centrix_meta.get(hcpcs, {})
-        cx_cat  = cm.get("cat", "")
-        cx_type = cm.get("type", "")
+        # -- Centrix Fees --
+        centrix_rows.append({
+            "HCPC":        hcpcs,
+            "Description": desc,
+            "CAT":         cm.get("cat", ""),
+            "TYPE":        cm.get("type", ""),
+            "NU Rate":     cx_nu,
+            "RR Rate":     cx_rr,
+            "NU Note":     cx_nu_note,
+            "RR Note":     cx_rr_note,
+        })
 
-        in_cms = hcpcs in cms_or
-        in_oha = hcpcs in oha_lk
-
-        if in_cms and in_oha:
-            bench = "CMS+OHA"
-        elif in_cms:
-            bench = "CMS"
-        elif in_oha:
-            bench = "OHA"
-        else:
-            bench = "NO BENCHMARK"
-
-        # CMS OR
+        # -- CMS NR Fees --
         cms_nu_nr = _cms_rate(cms_or, hcpcs, "NU")
         cms_rr_nr = _cms_rate(cms_or, hcpcs, "RR")
         cms_nu_r  = _cms_rural(cms_or, hcpcs, "NU")
         cms_rr_r  = _cms_rural(cms_or, hcpcs, "RR")
+        cms_rows.append({
+            "HCPC":        hcpcs,
+            "Description": desc,
+            "NR NU":       cms_nu_nr,
+            "NR RR":       cms_rr_nr,
+            "Rural NU":    cms_nu_r,
+            "Rural RR":    cms_rr_r,
+        })
 
-        # OHA
+        # -- OHA Fees --
         oha = oha_lk.get(hcpcs, {})
         oha_nu = oha.get("NU", np.nan)
         oha_rr = oha.get("RR", np.nan)
-
-        # Deltas: Centrix vs CMS NR
-        d_cms_nu, p_cms_nu = _delta(cx_nu, cms_nu_nr)
-        d_cms_rr, p_cms_rr = _delta(cx_rr, cms_rr_nr)
-
-        # Deltas: Centrix vs OHA
-        d_oha_nu, p_oha_nu = _delta(cx_nu, oha_nu)
-        d_oha_rr, p_oha_rr = _delta(cx_rr, oha_rr)
-
-        # Flags (vs CMS)
-        f_nu = _flag(cx_nu, cms_nu_nr, oha_nu, cx_nu_note)
-        f_rr = _flag(cx_rr, cms_rr_nr, oha_rr, cx_rr_note)
-
-        rows.append({
-            "HCPC":              hcpcs,
-            "Description":       hcpcs_desc.get(hcpcs, ""),
-            "Benchmark":         bench,
-            "Centrix CAT":       cx_cat,
-            "Centrix TYPE":      cx_type,
-            # Centrix proposed
-            "Centrix NU":        cx_nu,
-            "Centrix RR":        cx_rr,
-            "Centrix NU Note":   cx_nu_note,
-            "Centrix RR Note":   cx_rr_note,
-            # CMS
-            "CMS NR NU":         cms_nu_nr,
-            "CMS NR RR":         cms_rr_nr,
-            "CMS Rural NU":      cms_nu_r,
-            "CMS Rural RR":      cms_rr_r,
-            # OHA
-            "OHA NU":            oha_nu,
-            "OHA RR":            oha_rr,
-            # Deltas vs CMS NR
-            "Delta CMS NU":      d_cms_nu,
-            "Delta CMS RR":      d_cms_rr,
-            "Delta% CMS NU":     p_cms_nu,
-            "Delta% CMS RR":     p_cms_rr,
-            # Deltas vs OHA
-            "Delta OHA NU":      d_oha_nu,
-            "Delta OHA RR":      d_oha_rr,
-            "Delta% OHA NU":     p_oha_nu,
-            "Delta% OHA RR":     p_oha_rr,
-            # Flags
-            "Flag NU":           f_nu,
-            "Flag RR":           f_rr,
+        oha_rows.append({
+            "HCPC":        hcpcs,
+            "Description": desc,
+            "OHA NU":      oha_nu,
+            "OHA RR":      oha_rr,
         })
 
-    return pd.DataFrame(rows)
+        # -- CMS Comparison --
+        d_cms_nu, p_cms_nu = _delta(cx_nu, cms_nu_nr)
+        d_cms_rr, p_cms_rr = _delta(cx_rr, cms_rr_nr)
+        f_cms_nu = _flag(cx_nu, cms_nu_nr, cx_nu_note)
+        f_cms_rr = _flag(cx_rr, cms_rr_nr, cx_rr_note)
+        cms_cmp_rows.append({
+            "HCPC":        hcpcs,
+            "Description": desc,
+            "Centrix NU":  cx_nu,
+            "CMS NR NU":   cms_nu_nr,
+            "Delta $":     d_cms_nu,
+            "Delta %":     p_cms_nu,
+            "Flag NU":     f_cms_nu,
+            "Centrix RR":  cx_rr,
+            "CMS NR RR":   cms_rr_nr,
+            "Delta $ RR":  d_cms_rr,
+            "Delta % RR":  p_cms_rr,
+            "Flag RR":     f_cms_rr,
+        })
+
+        # -- OHA Comparison --
+        d_oha_nu, p_oha_nu = _delta(cx_nu, oha_nu)
+        d_oha_rr, p_oha_rr = _delta(cx_rr, oha_rr)
+        f_oha_nu = _flag(cx_nu, oha_nu, cx_nu_note)
+        f_oha_rr = _flag(cx_rr, oha_rr, cx_rr_note)
+        oha_cmp_rows.append({
+            "HCPC":        hcpcs,
+            "Description": desc,
+            "Centrix NU":  cx_nu,
+            "OHA NU":      oha_nu,
+            "Delta $":     d_oha_nu,
+            "Delta %":     p_oha_nu,
+            "Flag NU":     f_oha_nu,
+            "Centrix RR":  cx_rr,
+            "OHA RR":      oha_rr,
+            "Delta $ RR":  d_oha_rr,
+            "Delta % RR":  p_oha_rr,
+            "Flag RR":     f_oha_rr,
+        })
+
+        # -- Delta Flags (combined) --
+        in_cms = hcpcs in cms_or
+        in_oha_src = hcpcs in oha_lk
+        if in_cms and in_oha_src:
+            bench = "CMS+OHA"
+        elif in_cms:
+            bench = "CMS"
+        elif in_oha_src:
+            bench = "OHA"
+        else:
+            bench = "NONE"
+
+        flag_rows.append({
+            "HCPC":          hcpcs,
+            "Description":   desc,
+            "Benchmark":     bench,
+            "CMS Flag NU":   f_cms_nu,
+            "CMS Flag RR":   f_cms_rr,
+            "OHA Flag NU":   f_oha_nu,
+            "OHA Flag RR":   f_oha_rr,
+        })
+
+    return {
+        "Centrix Fees":    pd.DataFrame(centrix_rows),
+        "CMS NR Fees":     pd.DataFrame(cms_rows),
+        "OHA Fees":        pd.DataFrame(oha_rows),
+        "CMS Comparison":  pd.DataFrame(cms_cmp_rows),
+        "OHA Comparison":  pd.DataFrame(oha_cmp_rows),
+        "Delta Flags":     pd.DataFrame(flag_rows),
+    }
 
 
 # =====================================================================
-# 4.  XLSX FORMATTING
+# 4.  XLSX FORMATTING  (column-name driven, not positional)
 # =====================================================================
 GREEN_FILL  = PatternFill(start_color="C6EFCE", end_color="C6EFCE", fill_type="solid")
 RED_FILL    = PatternFill(start_color="FFC7CE", end_color="FFC7CE", fill_type="solid")
-YELLOW_FILL = PatternFill(start_color="FFEB9C", end_color="FFEB9C", fill_type="solid")
 BLUE_FILL   = PatternFill(start_color="BDD7EE", end_color="BDD7EE", fill_type="solid")
 GRAY_FILL   = PatternFill(start_color="D9D9D9", end_color="D9D9D9", fill_type="solid")
 PURPLE_FILL = PatternFill(start_color="E2D0F0", end_color="E2D0F0", fill_type="solid")
@@ -347,23 +380,31 @@ THIN_BORDER = Border(
     top=Side(style="thin"), bottom=Side(style="thin"))
 
 FLAG_COLORS = {
-    "BELOW CMS":            RED_FILL,
-    "ABOVE CMS":            BLUE_FILL,
-    "AT CMS":               GREEN_FILL,
-    "NO CMS RATE":          GRAY_FILL,
-    "NON-NUMERIC PROPOSED": PURPLE_FILL,
+    "BELOW":         RED_FILL,
+    "ABOVE":         BLUE_FILL,
+    "AT BENCHMARK":  GREEN_FILL,
+    "NO BENCHMARK":  GRAY_FILL,
+    "NON-NUMERIC":   PURPLE_FILL,
 }
 
-# 0-based column indices for currency and pct formatting
-# 0-HCPC, 1-Desc, 2-Bench, 3-CAT, 4-TYPE,
-# 5-CxNU, 6-CxRR, 7-CxNUNote, 8-CxRRNote,
-# 9-CMSNRNU, 10-CMSNRRR, 11-CMSRuralNU, 12-CMSRuralRR,
-# 13-OHANU, 14-OHARR,
-# 15-DeltaCMSNU, 16-DeltaCMSRR, 17-Delta%CMSNU, 18-Delta%CMSRR,
-# 19-DeltaOHANU, 20-DeltaOHARR, 21-Delta%OHANU, 22-Delta%OHARR,
-# 23-FlagNU, 24-FlagRR
-CURRENCY_COLS = {5, 6, 9, 10, 11, 12, 13, 14, 15, 16, 19, 20}
-PCT_COLS      = {17, 18, 21, 22}
+# Column-name substrings that determine formatting
+_CURRENCY_KEYS = ("Rate", "NU", "RR", "Delta $")
+_PCT_KEYS      = ("Delta %",)
+_FLAG_KEYS     = ("Flag",)
+
+
+def _is_currency_col(name: str) -> bool:
+    if "%" in name or "Flag" in name or "Note" in name:
+        return False
+    return any(k in name for k in _CURRENCY_KEYS)
+
+
+def _is_pct_col(name: str) -> bool:
+    return any(k in name for k in _PCT_KEYS)
+
+
+def _is_flag_col(name: str) -> bool:
+    return any(k in name for k in _FLAG_KEYS)
 
 
 def _flag_fill(text: str):
@@ -389,6 +430,9 @@ def write_tab(ws, df: pd.DataFrame):
     if df.empty:
         return
     cols = list(df.columns)
+    cur_set  = {i for i, c in enumerate(cols) if _is_currency_col(c)}
+    pct_set  = {i for i, c in enumerate(cols) if _is_pct_col(c)}
+    flag_set = {i for i, c in enumerate(cols) if _is_flag_col(c)}
 
     # Header
     for ci, col_name in enumerate(cols, 1):
@@ -408,21 +452,17 @@ def write_tab(ws, df: pd.DataFrame):
             cell.border = THIN_BORDER
 
             idx = ci - 1
-            if idx in CURRENCY_COLS and val is not None:
+            if idx in cur_set and val is not None:
                 cell.number_format = CURRENCY
-            elif idx in PCT_COLS and val is not None:
+            elif idx in pct_set and val is not None:
                 cell.number_format = PCT_FMT
 
-        # Flag colouring
-        for flag_col_name in ("Flag NU", "Flag RR"):
-            if flag_col_name in cols:
-                flag_idx = cols.index(flag_col_name) + 1
-                flag_val = str(row.get(flag_col_name, "") or "")
-                fill = _flag_fill(flag_val)
+            if idx in flag_set:
+                fill = _flag_fill(str(val or ""))
                 if fill:
-                    ws.cell(row=ri, column=flag_idx).fill = fill
+                    cell.fill = fill
 
-    ws.freeze_panes = "D2"
+    ws.freeze_panes = "C2"
     ws.auto_filter.ref = ws.dimensions
     _auto_width(ws)
 
@@ -500,7 +540,6 @@ def main():
     print(f"  OHA:     {len(oha_lk)} codes")
     print(f"  HCPCS descriptions: {len(hcpcs_desc)}")
 
-    # Universe = Centrix codes only
     centrix_codes = set(centrix_lk.keys())
     cms_codes     = set(cms_or.keys())
     oha_codes     = set(oha_lk.keys())
@@ -515,7 +554,6 @@ def main():
     print(f"  In Both:       {in_both}")
     print(f"  No Benchmark:  {no_bench}")
 
-    # Rate breakdown
     cx_nu_num = sum(1 for v in centrix_lk.values()
                     if not math.isnan(v.get("NU", np.nan)))
     cx_rr_num = sum(1 for v in centrix_lk.values()
@@ -525,39 +563,41 @@ def main():
     cx_rr_txt = sum(1 for v in centrix_lk.values()
                     if math.isnan(v.get("RR", np.nan)) and v.get("RR_note", ""))
 
-    # Build table
-    print("\nBuilding comparison table ...")
-    df = build_table(
-        centrix_lk=centrix_lk,
-        centrix_meta=centrix_meta,
-        cms_or=cms_or,
-        oha_lk=oha_lk,
-        hcpcs_desc=hcpcs_desc,
+    print("\nBuilding tables ...")
+    sheets = build_all_tables(
+        centrix_lk, centrix_meta, cms_or, oha_lk, hcpcs_desc,
     )
-    print(f"  -> {len(df)} rows")
+    for name, sdf in sheets.items():
+        print(f"  {name}: {len(sdf)} rows")
 
-    # Flag distributions
-    flag_nu = df["Flag NU"].fillna("").value_counts()
-    flag_rr = df["Flag RR"].fillna("").value_counts()
+    # Flag distributions (from CMS Comparison sheet)
+    cms_cmp = sheets["CMS Comparison"]
+    flag_nu = cms_cmp["Flag NU"].fillna("").value_counts()
+    flag_rr = cms_cmp["Flag RR"].fillna("").value_counts()
     flag_dist = {
-        "NU": [(f, int(c)) for f, c in flag_nu.items() if f],
-        "RR": [(f, int(c)) for f, c in flag_rr.items() if f],
+        "CMS NU": [(f, int(c)) for f, c in flag_nu.items() if f],
+        "CMS RR": [(f, int(c)) for f, c in flag_rr.items() if f],
     }
+    oha_cmp = sheets["OHA Comparison"]
+    oha_fnu = oha_cmp["Flag NU"].fillna("").value_counts()
+    oha_frr = oha_cmp["Flag RR"].fillna("").value_counts()
+    flag_dist["OHA NU"] = [(f, int(c)) for f, c in oha_fnu.items() if f]
+    flag_dist["OHA RR"] = [(f, int(c)) for f, c in oha_frr.items() if f]
 
     for slot, items in flag_dist.items():
         print(f"  {slot} flags: {', '.join(f'{f}={c}' for f, c in items)}")
 
     summary = {
-        "centrix":      len(centrix_codes),
-        "in_cms":       in_cms,
-        "in_oha":       in_oha,
-        "in_both":      in_both,
-        "no_bench":     no_bench,
+        "centrix":       len(centrix_codes),
+        "in_cms":        in_cms,
+        "in_oha":        in_oha,
+        "in_both":       in_both,
+        "no_bench":      no_bench,
         "cx_nu_numeric": cx_nu_num,
         "cx_rr_numeric": cx_rr_num,
-        "cx_nu_text":   cx_nu_txt,
-        "cx_rr_text":   cx_rr_txt,
-        "flags":        flag_dist,
+        "cx_nu_text":    cx_nu_txt,
+        "cx_rr_text":    cx_rr_txt,
+        "flags":         flag_dist,
     }
 
     # Write XLSX
@@ -568,13 +608,15 @@ def main():
     ws_summary.title = "Summary"
     write_summary(ws_summary, summary)
 
-    ws_detail = wb.create_sheet(title="Detail")
-    write_tab(ws_detail, df)
+    for sheet_name, sdf in sheets.items():
+        ws = wb.create_sheet(title=sheet_name)
+        write_tab(ws, sdf)
 
     wb.save(out_path)
+    n_codes = len(sheets["Centrix Fees"])
     print(f"\nDone -> {out_path}")
     print(f"  Tabs: {', '.join(wb.sheetnames)}")
-    print(f"  {len(df)} codes analysed")
+    print(f"  {n_codes} codes analysed across {len(sheets)} sheets")
 
 
 if __name__ == "__main__":
