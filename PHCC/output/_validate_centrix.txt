@@ -1,0 +1,97 @@
+Reading C:\Users\ithom\Downloads\FFS_PHCC_ANALYSIS\PHCC\output\centrix_rate_analysis.xlsx ...
+Tabs found: ['Summary', 'vs Managed', 'vs Commercial', 'Contract View']
+  [OK] Summary tab exists
+  [OK] vs Managed tab exists
+  [OK] vs Commercial tab exists
+
+============================================================
+TAB: vs Managed
+============================================================
+  [OK] Row count = Universe
+  [OK] No duplicate HCPC codes
+  [OK] BOTH count = 296
+  [OK] CENTRIX_ONLY count = 2047
+  [OK] PHCC_ONLY count = 4
+  [OK] Source totals = Universe
+  [OK] PHCC_ONLY codes match expected
+  [OK] PHCC_ONLY -> Centrix NU blank
+  [OK] PHCC_ONLY -> Centrix RR blank
+  [OK] CENTRIX_ONLY -> PHCC NU blank
+  [OK] CENTRIX_ONLY -> PHCC RR blank
+  [OK] Centrix NU populated > 1800 (got 2089)
+  [OK] Centrix RR populated > 350 (got 391)
+  [OK] Delta NU spot-check 10/10 correct
+  [OK] NEW CODE flag not on BOTH rows
+  [OK] PHCC ONLY flag only on PHCC_ONLY source
+  [OK] NON-NUMERIC PROPOSED have note text (226/226)
+
+  Flag NU distribution:
+    NEW CODE: 1804
+    NON-NUMERIC PROPOSED: 226
+    NON-NUMERIC CURRENT: 111
+    BELOW CMS FLOOR | PHCC BELOW CMS: 109
+    BELOW CURRENT: 56
+    (blank): 31
+    RATE INCREASE | PHCC BELOW CMS: 4
+    RATE INCREASE: 2
+    NO CHANGE | PHCC BELOW CMS: 2
+    BELOW CMS FLOOR: 1
+    PHCC BELOW CMS: 1
+
+  Flag RR distribution:
+    (blank): 1900
+    NEW CODE: 374
+    NON-NUMERIC PROPOSED: 54
+    BELOW CMS FLOOR | PHCC BELOW CMS: 7
+    BELOW CMS FLOOR: 4
+    RATE INCREASE | PHCC BELOW CMS: 4
+    PHCC BELOW CMS: 2
+    RATE INCREASE: 1
+    NON-NUMERIC CURRENT: 1
+
+============================================================
+TAB: vs Commercial
+============================================================
+  [OK] Row count = Universe
+  [OK] No duplicate HCPC codes
+  [OK] BOTH count = 296
+  [OK] CENTRIX_ONLY count = 2047
+  [OK] PHCC_ONLY count = 4
+  [OK] Source totals = Universe
+  [OK] PHCC_ONLY codes match expected
+  [OK] PHCC_ONLY -> Centrix NU blank
+  [OK] PHCC_ONLY -> Centrix RR blank
+  [OK] CENTRIX_ONLY -> PHCC NU blank
+  [OK] CENTRIX_ONLY -> PHCC RR blank
+  [OK] Centrix NU populated > 1800 (got 2089)
+  [OK] Centrix RR populated > 350 (got 391)
+  [OK] Delta NU spot-check 10/10 correct
+  [OK] NEW CODE flag not on BOTH rows
+  [OK] PHCC ONLY flag only on PHCC_ONLY source
+  [OK] NON-NUMERIC PROPOSED have note text (226/226)
+
+  Flag NU distribution:
+    NEW CODE: 1804
+    NON-NUMERIC PROPOSED: 226
+    NON-NUMERIC CURRENT: 218
+    BELOW CURRENT: 46
+    (blank): 32
+    BELOW CMS FLOOR | PHCC BELOW CMS: 14
+    RATE INCREASE | PHCC BELOW CMS: 4
+    RATE INCREASE: 2
+    BELOW CMS FLOOR: 1
+
+  Flag RR distribution:
+    (blank): 1901
+    NEW CODE: 374
+    NON-NUMERIC PROPOSED: 54
+    BELOW CMS FLOOR | PHCC BELOW CMS: 7
+    RATE INCREASE | PHCC BELOW CMS: 4
+    BELOW CMS FLOOR: 4
+    NON-NUMERIC CURRENT: 1
+    RATE INCREASE: 1
+    PHCC BELOW CMS: 1
+
+============================================================
+TOTAL: 37 PASS, 0 FAIL
+[OK] ALL VALIDATIONS PASSED

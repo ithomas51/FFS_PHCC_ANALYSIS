@@ -1,0 +1,22 @@
+Loading data ...
+  Centrix: 2343 unique codes
+  PHCC Managed: 300 codes
+  PHCC Commercial: 300 codes
+  CMS OR: 2106 codes
+  OHA: 3963 codes
+
+Code universe: 2347 (Centrix=2343, PHCC=300, Both=296, Centrix-only=2047, PHCC-only=4)
+  Raw contract: 269 rows
+
+Building vs Managed ...
+  -> 2347 rows
+
+Building vs Commercial ...
+  -> 2347 rows
+
+Building Contract View ...
+  -> 284 rows
+
+Writing C:\Users\ithom\Downloads\FFS_PHCC_ANALYSIS\PHCC\output\centrix_rate_analysis.xlsx ...
+Done -> C:\Users\ithom\Downloads\FFS_PHCC_ANALYSIS\PHCC\output\centrix_rate_analysis.xlsx
+  Tabs: Summary, vs Managed, vs Commercial

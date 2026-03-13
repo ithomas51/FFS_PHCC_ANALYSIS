@@ -1,0 +1,27 @@
+=== CENTRIX ===
+Rows: 2760
+Valid HCPC rows: 2760
+Invalid HCPC rows: 0
+Unique valid HCPC: 2343
+MOD1 dist: {'NU': 2309, 'RR': 445, 'SQ': 5, 'TF': 1}
+
+Rate types:
+  NUMERIC: 2480
+  MSRP: 280
+
+Codes with BOTH NU+RR rows: 415
+Codes with RR only (no NU): 30
+
+=== PHCC OR CONTRACTED (cleaned) ===
+Valid rows: 330
+Unique codes: 300
+Mods: {'NU': 305, 'RR': 24, '': 1}
+  Managed Purchase Rate_note_type: {'NUMERIC': 195, 'PERCENT_OF_RETAIL': 132, 'QUOTE_REQUIRED': 1, '': 1, 'UNPARSED_TEXT': 1}
+  Managed Rental Rate_note_type: {'': 284, 'NUMERIC': 37, 'PERCENT_OF_RETAIL': 9}
+  Commercial Purchase Rate_note_type: {'PERCENT_OF_RETAIL': 243, 'NUMERIC': 84, 'QUOTE_REQUIRED': 1, '': 1, 'UNPARSED_TEXT': 1}
+  Commercial Rental Rate_note_type: {'': 284, 'NUMERIC': 34, 'PERCENT_OF_RETAIL': 12}
+
+Overlap: 296
+Centrix-only: 2047
+PHCC-only: 4
+  PHCC-only codes: ['E1019', 'E2223', 'E2300', 'E2618']
