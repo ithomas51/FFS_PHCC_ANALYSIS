@@ -11,7 +11,9 @@ No PHCC contract data is used.  Code universe = Centrix HCPC codes only.
 For each code, NU (purchase) and RR (rental) rates are compared
 independently.  Blanks where no data exists.
 
-Output: output/centrix_cms_analysis.xlsx  (2 tabs: Summary, Detail)
+Output: output/centrix_cms_analysis.xlsx
+  Tabs: Summary, Centrix Fees, CMS NR Fees, OHA Fees,
+        CMS Comparison, OHA Comparison, Delta Flags
 """
 
 import re, math, sys
