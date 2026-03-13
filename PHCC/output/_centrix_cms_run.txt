@@ -1,0 +1,28 @@
+============================================================
+Centrix Care OR -- CMS / OHA Benchmark Analysis
+============================================================
+
+Loading data ...
+  Centrix: 2343 unique codes
+  CMS OR:  2106 codes
+  OHA:     3963 codes
+  HCPCS descriptions: 8623
+
+Centrix codes: 2343
+  In CMS:        1908
+  In OHA:        1803
+  In Both:       1577
+  No Benchmark:  209
+
+Building comparison table ...
+  -> 2343 rows
+  NU flags: BELOW CMS=1419, NO CMS RATE=572, NON-NUMERIC PROPOSED=226, ABOVE CMS=73, AT CMS=25
+  RR flags: BELOW CMS=322, NON-NUMERIC PROPOSED=54, NO CMS RATE=53, ABOVE CMS=9, AT CMS=7
+
+Writing centrix_cms_analysis.xlsx ...
+
+Done -> C:\Users\ithom\Downloads\FFS_PHCC_ANALYSIS\PHCC\output\centrix_cms_analysis.xlsx
+  Tabs: Summary, Detail
+  2343 codes analysed
+
+Return code: 0
