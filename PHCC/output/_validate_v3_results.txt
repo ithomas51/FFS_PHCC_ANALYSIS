@@ -1,0 +1,194 @@
+Validating: C:\Users\ithom\Downloads\FFS_PHCC_ANALYSIS\PHCC\output\unified_code_analysis.xlsx
+
+Tabs found: ['Summary', 'Commercial', 'ASO', 'Medicare', 'Medicaid']
+  [PASS] Has Summary tab
+  [PASS] Has 4 payer tabs
+
+=== Commercial ===
+  Shape: (1167, 26)
+  [PASS] Row count = 1167  ΓÇö got 1167
+  [PASS] No duplicate HCPCS  ΓÇö 0 duplicates
+  [PASS] BOTH = 312  ΓÇö got 312
+  [PASS] INTEGRA_ONLY = 676  ΓÇö got 676
+  [PASS] PHCC_ONLY = 179  ΓÇö got 179
+  Integra NU populated: 573
+  Integra RR populated: 68
+  [FAIL] Integra NU > 800  ΓÇö 573
+  PHCC NU (any schedule): 300
+  PHCC RR (any schedule): 72
+  [PASS] PHCC NU any >= 300  ΓÇö 300
+  CMS NU cells populated (OR+WA): 1602
+  [PASS] Delta NU correct (10/10)
+  [PASS] Flag NU logic correct (10/10)
+  [PASS] PHCC_ONLY ΓåÆ Integra rates blank
+  [PASS] INTEGRA_ONLY ΓåÆ PHCC NU rates blank
+
+  NU Flag distribution:
+    (blank): 473
+    NEW CODE: 391
+    RATE INCREASE | PHCC BELOW CMS: 67
+    PHCC ONLY | PHCC BELOW CMS: 51
+    PHCC BELOW CMS: 41
+    PHCC NON-NUMERIC: 39
+    RATE INCREASE: 36
+    PHCC ONLY: 29
+    BELOW CURRENT: 22
+    BELOW CMS FLOOR | PHCC BELOW CMS: 11
+    BELOW CMS FLOOR: 5
+    NO CHANGE: 1
+    NO CHANGE | PHCC BELOW CMS: 1
+  RR Flag distribution:
+    (blank): 1071
+    NEW CODE: 16
+    PHCC NON-NUMERIC: 15
+    RATE INCREASE | PHCC BELOW CMS: 15
+    PHCC BELOW CMS: 14
+    PHCC ONLY | PHCC BELOW CMS: 10
+    BELOW CURRENT: 9
+    RATE INCREASE: 8
+    PHCC ONLY: 4
+    BELOW CMS FLOOR | PHCC BELOW CMS: 3
+    BELOW CMS FLOOR: 2
+
+=== ASO ===
+  Shape: (1167, 26)
+  [PASS] Row count = 1167  ΓÇö got 1167
+  [PASS] No duplicate HCPCS  ΓÇö 0 duplicates
+  [PASS] BOTH = 312  ΓÇö got 312
+  [PASS] INTEGRA_ONLY = 676  ΓÇö got 676
+  [PASS] PHCC_ONLY = 179  ΓÇö got 179
+  Integra NU populated: 615
+  Integra RR populated: 81
+  [FAIL] Integra NU > 800  ΓÇö 615
+  PHCC NU (any schedule): 300
+  PHCC RR (any schedule): 72
+  [PASS] PHCC NU any >= 300  ΓÇö 300
+  CMS NU cells populated (OR+WA): 1602
+  [PASS] Delta NU correct (10/10)
+  [PASS] Flag NU logic correct (10/10)
+  [PASS] PHCC_ONLY ΓåÆ Integra rates blank
+  [PASS] INTEGRA_ONLY ΓåÆ PHCC NU rates blank
+
+  NU Flag distribution:
+    (blank): 442
+    NEW CODE: 414
+    RATE INCREASE | PHCC BELOW CMS: 77
+    PHCC ONLY | PHCC BELOW CMS: 51
+    PHCC NON-NUMERIC: 50
+    RATE INCREASE: 36
+    PHCC BELOW CMS: 30
+    PHCC ONLY: 29
+    BELOW CURRENT: 19
+    BELOW CMS FLOOR | PHCC BELOW CMS: 11
+    BELOW CMS FLOOR: 4
+    NO CHANGE: 2
+    NO CHANGE | PHCC BELOW CMS: 2
+  RR Flag distribution:
+    (blank): 1061
+    NEW CODE: 24
+    RATE INCREASE | PHCC BELOW CMS: 18
+    PHCC NON-NUMERIC: 15
+    PHCC BELOW CMS: 11
+    BELOW CURRENT: 11
+    PHCC ONLY | PHCC BELOW CMS: 10
+    RATE INCREASE: 8
+    PHCC ONLY: 4
+    BELOW CMS FLOOR | PHCC BELOW CMS: 3
+    BELOW CMS FLOOR: 2
+
+=== Medicare ===
+  Shape: (1167, 26)
+  [PASS] Row count = 1167  ΓÇö got 1167
+  [PASS] No duplicate HCPCS  ΓÇö 0 duplicates
+  [PASS] BOTH = 312  ΓÇö got 312
+  [PASS] INTEGRA_ONLY = 676  ΓÇö got 676
+  [PASS] PHCC_ONLY = 179  ΓÇö got 179
+  Integra NU populated: 595
+  Integra RR populated: 76
+  [FAIL] Integra NU > 800  ΓÇö 595
+  PHCC NU (any schedule): 301
+  PHCC RR (any schedule): 72
+  [PASS] PHCC NU any >= 300  ΓÇö 301
+  CMS NU cells populated (OR+WA): 1602
+  [PASS] Delta NU correct (10/10)
+  [PASS] Flag NU logic correct (10/10)
+  [PASS] PHCC_ONLY ΓåÆ Integra rates blank
+  [PASS] INTEGRA_ONLY ΓåÆ PHCC NU rates blank
+
+  NU Flag distribution:
+    (blank): 465
+    NEW CODE: 375
+    RATE INCREASE | PHCC BELOW CMS: 80
+    PHCC NON-NUMERIC: 55
+    PHCC ONLY | PHCC BELOW CMS: 51
+    RATE INCREASE: 37
+    PHCC ONLY: 29
+    PHCC BELOW CMS: 27
+    BELOW CURRENT: 25
+    BELOW CMS FLOOR | PHCC BELOW CMS: 14
+    BELOW CMS FLOOR: 6
+    NO CHANGE: 3
+  RR Flag distribution:
+    (blank): 1067
+    RATE INCREASE | PHCC BELOW CMS: 19
+    PHCC NON-NUMERIC: 15
+    NEW CODE: 15
+    BELOW CURRENT: 11
+    PHCC ONLY | PHCC BELOW CMS: 10
+    PHCC BELOW CMS: 10
+    RATE INCREASE: 8
+    BELOW CMS FLOOR: 4
+    PHCC ONLY: 4
+    BELOW CMS FLOOR | PHCC BELOW CMS: 3
+    NO CHANGE: 1
+
+=== Medicaid ===
+  Shape: (1167, 26)
+  [PASS] Row count = 1167  ΓÇö got 1167
+  [PASS] No duplicate HCPCS  ΓÇö 0 duplicates
+  [PASS] BOTH = 312  ΓÇö got 312
+  [PASS] INTEGRA_ONLY = 676  ΓÇö got 676
+  [PASS] PHCC_ONLY = 179  ΓÇö got 179
+  Integra NU populated: 640
+  Integra RR populated: 78
+  [FAIL] Integra NU > 800  ΓÇö 640
+  PHCC NU (any schedule): 301
+  PHCC RR (any schedule): 72
+  [PASS] PHCC NU any >= 300  ΓÇö 301
+  CMS NU cells populated (OR+WA): 1602
+  [PASS] Delta NU correct (10/10)
+  [PASS] Flag NU logic correct (10/10)
+  [PASS] PHCC_ONLY ΓåÆ Integra rates blank
+  [PASS] INTEGRA_ONLY ΓåÆ PHCC NU rates blank
+
+  NU Flag distribution:
+    (blank): 427
+    NEW CODE: 406
+    RATE INCREASE | PHCC BELOW CMS: 82
+    PHCC NON-NUMERIC: 53
+    PHCC ONLY | PHCC BELOW CMS: 51
+    RATE INCREASE: 44
+    BELOW CURRENT: 29
+    PHCC ONLY: 29
+    PHCC BELOW CMS: 20
+    BELOW CMS FLOOR | PHCC BELOW CMS: 18
+    BELOW CMS FLOOR: 5
+    NO CHANGE: 2
+    NO CHANGE | PHCC BELOW CMS: 1
+  RR Flag distribution:
+    (blank): 1066
+    RATE INCREASE | PHCC BELOW CMS: 20
+    PHCC NON-NUMERIC: 16
+    BELOW CURRENT: 16
+    NEW CODE: 14
+    PHCC ONLY | PHCC BELOW CMS: 10
+    PHCC BELOW CMS: 9
+    RATE INCREASE: 6
+    PHCC ONLY: 4
+    BELOW CMS FLOOR | PHCC BELOW CMS: 3
+    BELOW CMS FLOOR: 2
+    NO CHANGE: 1
+
+==================================================
+TOTAL: 42 PASS, 4 FAIL
+Γ£ù SOME VALIDATIONS FAILED ΓÇö see details above

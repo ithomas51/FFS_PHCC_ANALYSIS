@@ -1,0 +1,36 @@
+=== Commercial (Commercial) ===
+  NU rows: 978, RR rows: 100
+  NU unique codes: 953
+  NU numeric rates: 583
+  NU non-numeric rates: 395
+  Top non-numeric:
+    363: 'Prevailng State Rates'
+    32: 'Cost Invoice'
+
+=== ASO (ASO/Commercial) ===
+  NU rows: 978, RR rows: 100
+  NU unique codes: 953
+  NU numeric rates: 630
+  NU non-numeric rates: 348
+  Top non-numeric:
+    312: 'Prevailing State Rates'
+    36: 'Cost Invoice'
+
+=== Medicare (Medicare) ===
+  NU rows: 978, RR rows: 100
+  NU unique codes: 953
+  NU numeric rates: 613
+  NU non-numeric rates: 365
+  Top non-numeric:
+    337: 'Prevailing State Rates'
+    28: 'Cost Invoice'
+
+=== Medicaid (Medicaid) ===
+  NU rows: 978, RR rows: 100
+  NU unique codes: 953
+  NU numeric rates: 658
+  NU non-numeric rates: 320
+  Top non-numeric:
+    292: 'Prevailing State Rates'
+    28: 'Cost Invoice'
+

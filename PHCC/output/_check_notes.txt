@@ -1,0 +1,20 @@
+Codes with NaN Integra NU (non-PHCC_ONLY): 415
+Of those, with Integra Note populated: 401
+Without note: 14
+
+Top notes:
+  370: Prevailng State Rates
+  31: Cost Invoice
+
+Codes with BOTH NU and RR NaN (non-PHCC_ONLY): 398
+    HCPCS                   Description           Integra Note
+7   A4231  Infusion insulin pump needle  Prevailng State Rates
+9   A4233  Alkalin batt for glucose mon  Prevailng State Rates
+10  A4235  Lithium batt for glucose mon  Prevailng State Rates
+13  A4245         Alcohol wipes per box  Prevailng State Rates
+14  A4247   Betadine/iodine swabs/wipes  Prevailng State Rates
+15  A4252    Blood ketone test or strip  Prevailng State Rates
+16  A4253  Blood glucose/reagent strips  Prevailng State Rates
+18  A4258            Lancet device each  Prevailng State Rates
+22  A4283    Replacement breastpump cap           Cost Invoice
+24  A4285   Replcmnt breast pump bottle           Cost Invoice
