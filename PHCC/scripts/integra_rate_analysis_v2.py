@@ -49,6 +49,10 @@ FILES = {
     "cms_wa": CMS_DIR / "CMS_2026_Q1_WA.csv",
     "oha":    CMS_DIR / "OHA_FFS_09_2025_RAW.csv",
     "hcpcs":  CMS_DIR / "2026_CMS_HCPCS.csv",
+    # Raw contract files (for Contract View tabs)
+    "or_contracted_raw":    PHCC_ROOT / "data" / "Contract" / "PHCC_OR_CONTRACTED.csv",
+    "or_participating_raw": PHCC_ROOT / "data" / "Contract" / "PHCC_OR_PARTICIPATING.csv",
+    "wa_participating_raw": PHCC_ROOT / "data" / "Contract" / "PHCC_WA_PARTICIPATING.csv",
 }
 
 # Payer configs: (integra_key, payer_label, integra_rate_col,
@@ -225,6 +229,41 @@ def load_hcpcs_desc(path: Path) -> dict[str, str]:
     df.columns = [c.strip() for c in df.columns]
     return {_norm(r.get("HCPC", "")): str(r.get("SHORT DESCRIPTION", "")).strip()
             for _, r in df.iterrows() if _norm(r.get("HCPC", ""))}
+
+
+def load_raw_contract(path: Path) -> pd.DataFrame:
+    """Load a raw (uncleaned) PHCC contract CSV for Contract View."""
+    df = pd.read_csv(path, dtype=str, keep_default_na=False)
+    df.columns = [c.strip() for c in df.columns]
+    df = df.loc[:, ~df.columns.str.startswith("Unnamed")]
+    # Normalise HCPCS + Mod columns (handle both 'Mod' and 'Modifier' headers)
+    hcpcs_col = "HCPCS"
+    mod_col = "Mod" if "Mod" in df.columns else "Modifier"
+    df["_hcpcs"] = df[hcpcs_col].str.strip().str.upper()
+    df["_mod"] = df[mod_col].str.strip().str.upper()
+    return df
+
+
+def _build_integra_lk(integra_dfs: dict) -> dict:
+    """Build {hcpcs|mod: {payer: rate, payer_raw: raw}} from loaded Integra DFs."""
+    payer_map = {
+        "integra_commercial": "Commercial",
+        "integra_aso":        "ASO",
+        "integra_medicare":   "Medicare",
+        "integra_medicaid":   "Medicaid",
+    }
+    lk = {}
+    for key, payer_name in payer_map.items():
+        df = integra_dfs[key]
+        for _, row in df.iterrows():
+            h = row["hcpcs"]
+            m = row["mod"]
+            if not h:
+                continue
+            k = f"{h}|{m}"
+            lk.setdefault(k, {})[payer_name] = row["proposed_rate"]
+            lk[k][f"{payer_name}_raw"] = row["proposed_raw"]
+    return lk
 
 
 # ───────────────────────────────────────────────────────────────────────
@@ -479,6 +518,261 @@ def build_payer_table(
         df = df.sort_values(["_sort", "HCPCS", "State"], ascending=True)
         df = df.drop(columns=["_sort"])
     return df
+
+
+# ───────────────────────────────────────────────────────────────────────
+# 4b. CONTRACT VIEW BUILDER
+# ───────────────────────────────────────────────────────────────────────
+
+def _integra_rate(integra_lk: dict, hcpcs: str, mod: str, payer: str) -> float:
+    """Look up Integra proposed rate for hcpcs|mod, with NU/RR/''/blank fallback."""
+    for try_mod in [mod, "NU", "RR", ""]:
+        rec = integra_lk.get(f"{hcpcs}|{try_mod}")
+        if rec and not math.isnan(rec.get(payer, np.nan)):
+            return rec[payer]
+    return np.nan
+
+
+def build_contract_view(
+    raw_df: pd.DataFrame,
+    schedule_key: str,
+    integra_lk: dict,
+    phcc_key_lk: dict,
+    phcc_code_lk: dict,
+    phcc_range_lk: list,
+    cms_lk: dict,
+    oha_lk: dict,
+    hcpcs_desc: dict,
+) -> pd.DataFrame:
+    """Build a Contract View DataFrame for one raw contract file.
+
+    Left side  = raw contract columns (original text).
+    Right side = Integra proposed rates + resolved current + CMS + deltas + flag.
+    """
+    is_contracted = (schedule_key == "or_contracted")
+    schedule_label = {
+        "or_contracted":    "PHCC_OR_CONTRACTED",
+        "or_participating": "PHCC_OR_PARTICIPATING",
+        "wa_participating": "PHCC_WA_PARTICIPATING",
+    }[schedule_key]
+
+    rows = []
+    for _, r in raw_df.iterrows():
+        hcpcs = r["_hcpcs"]
+        if not VALID_HCPCS_RE.match(hcpcs):
+            continue
+        mod_raw = r["_mod"]
+
+        # Raw contract text columns
+        desc_raw  = str(r.get("Description", "")).strip()
+        unit_raw  = str(r.get("Billing Unit", "")).strip()
+        comments  = str(r.get("Comments", "")).strip()
+
+        if is_contracted:
+            mgd_rent  = str(r.get("Managed Rental Rate", "")).strip()
+            mgd_purch = str(r.get("Managed Purchase Rate", "")).strip()
+            com_rent  = str(r.get("Commercial Rental Rate", "")).strip()
+            com_purch = str(r.get("Commercial Purchase Rate", "")).strip()
+        else:
+            rent_raw  = str(r.get("Rental Rate", "")).strip()
+            purch_raw = str(r.get("Purchase Rate", "")).strip()
+
+        # Split NU/RR modifiers into separate rows
+        mods_to_process = []
+        clean_mod = mod_raw.replace("**", "").replace("*", "")
+        if "/" in clean_mod:
+            mods_to_process = [m.strip() for m in clean_mod.split("/")
+                               if m.strip() in ("NU", "RR")]
+        elif clean_mod in ("NU", "RR", ""):
+            mods_to_process = [clean_mod if clean_mod else "NU"]
+        else:
+            # Composite modifiers like RR,QG,QF — take first component
+            mods_to_process = [clean_mod.split(",")[0].strip()]
+            if mods_to_process[0] not in ("NU", "RR"):
+                mods_to_process = ["NU"]
+
+        for mod in mods_to_process:
+            # ── Match PHCC cleaned row ──
+            phcc_row, tier, cross_mod = best_match(
+                hcpcs, mod, phcc_key_lk, phcc_code_lk, phcc_range_lk)
+
+            # ── CMS benchmark ──
+            cms_nr, cms_r, _ = cms_cascade(hcpcs, mod, cms_lk)
+
+            # ── OHA ──
+            oha_rate = np.nan
+            for _, try_mod in [("B1", mod), ("B2", "NU"), ("B3", "RR"), ("B4", "")]:
+                oha_val = oha_lk.get(f"{hcpcs}|{try_mod}", np.nan)
+                if not math.isnan(oha_val):
+                    oha_rate = oha_val
+                    break
+
+            # ── Current numeric from cleaned data ──
+            if is_contracted:
+                eff_mod = cross_mod if cross_mod else mod
+                mgd_num, mgd_num_raw = (
+                    _pick_rate(phcc_row, schedule_label, "Medicare", eff_mod, cms_nr)
+                    if phcc_row is not None else (np.nan, ""))
+                com_num, com_num_raw = (
+                    _pick_rate(phcc_row, schedule_label, "Commercial", eff_mod, cms_nr)
+                    if phcc_row is not None else (np.nan, ""))
+            else:
+                eff_mod = cross_mod if cross_mod else mod
+                cur_num, cur_raw = (
+                    _pick_rate(phcc_row, schedule_label, "Commercial", eff_mod, cms_nr)
+                    if phcc_row is not None else (np.nan, ""))
+
+            # ── Integra proposed rates ──
+            int_comm = _integra_rate(integra_lk, hcpcs, mod, "Commercial")
+            int_aso  = _integra_rate(integra_lk, hcpcs, mod, "ASO")
+            int_med  = _integra_rate(integra_lk, hcpcs, mod, "Medicare")
+            int_mcd  = _integra_rate(integra_lk, hcpcs, mod, "Medicaid")
+
+            # ── Primary delta: Integra Commercial vs current rate ──
+            if is_contracted:
+                primary_proposed = int_comm
+                primary_current  = com_num
+            else:
+                primary_proposed = int_comm
+                primary_current  = cur_num
+
+            delta, pct = np.nan, np.nan
+            have_both = (not math.isnan(primary_proposed)
+                         and not math.isnan(primary_current))
+            if have_both:
+                delta = primary_proposed - primary_current
+                if primary_current != 0:
+                    pct = delta / primary_current * 100
+
+            # ── Flag (same logic as payer tabs) ──
+            flag = ""
+            if tier == "NO_MATCH":
+                flag = "NO PHCC MATCH"
+            elif not have_both:
+                if math.isnan(primary_proposed):
+                    flag = "NO INTEGRA RATE"
+                elif math.isnan(primary_current):
+                    flag = "NON-NUMERIC CURRENT"
+            else:
+                if primary_current != 0 and abs(pct) <= TOLERANCE_PCT:
+                    flag = "NO CHANGE"
+                elif primary_proposed > primary_current:
+                    flag = "RATE INCREASE"
+                else:
+                    if not math.isnan(cms_nr):
+                        if primary_proposed >= cms_nr:
+                            flag = "BELOW CURRENT"
+                        else:
+                            flag = "BELOW CMS FLOOR"
+                    else:
+                        flag = "BELOW CURRENT"
+
+            # Systemic: current < CMS
+            if (not math.isnan(primary_current)
+                    and not math.isnan(cms_nr)
+                    and primary_current < cms_nr):
+                flag = f"{flag} | PHCC BELOW CMS" if flag else "PHCC BELOW CMS"
+
+            # ── Build row ──
+            if is_contracted:
+                row = {
+                    "HCPCS":                hcpcs,
+                    "Mod":                  mod,
+                    "Description":          desc_raw,
+                    "Billing Unit":         unit_raw,
+                    "Managed Rental":       mgd_rent if mod == "RR" else "",
+                    "Managed Purchase":     mgd_purch if mod == "NU" else "",
+                    "Commercial Rental":    com_rent if mod == "RR" else "",
+                    "Commercial Purchase":  com_purch if mod == "NU" else "",
+                    "Comments":             comments,
+                    # --- Comparison ---
+                    "Managed $":            mgd_num,
+                    "Commercial $":         com_num,
+                    "Integra Comm":         int_comm,
+                    "Integra ASO":          int_aso,
+                    "Integra Medicare":     int_med,
+                    "Integra Medicaid":     int_mcd,
+                    "CMS NR":               cms_nr,
+                    "OHA Rate":             oha_rate,
+                    "Δ Integra–Current":    delta,
+                    "Δ%":                   pct,
+                    "Flag":                 flag,
+                }
+            else:
+                row = {
+                    "HCPCS":                hcpcs,
+                    "Mod":                  mod,
+                    "Description":          desc_raw,
+                    "Billing Unit":         unit_raw,
+                    "Rental Rate":          rent_raw if mod == "RR" else "",
+                    "Purchase Rate":        purch_raw if mod == "NU" else "",
+                    "Comments":             comments,
+                    # --- Comparison ---
+                    "Current $":            cur_num,
+                    "Integra Comm":         int_comm,
+                    "Integra ASO":          int_aso,
+                    "Integra Medicare":     int_med,
+                    "Integra Medicaid":     int_mcd,
+                    "CMS NR":               cms_nr,
+                    "OHA Rate":             oha_rate,
+                    "Δ Integra–Current":    delta,
+                    "Δ%":                   pct,
+                    "Flag":                 flag,
+                }
+            rows.append(row)
+
+    return pd.DataFrame(rows)
+
+
+def _write_contract_tab(ws: Worksheet, df: pd.DataFrame,
+                        contract_col_count: int):
+    """Write Contract View tab with blue headers (contract) / green (comparison)."""
+    if df.empty:
+        return
+    cols = list(df.columns)
+
+    CONTRACT_FILL = PatternFill(start_color="2E75B6", end_color="2E75B6", fill_type="solid")
+    COMPARE_FILL  = PatternFill(start_color="548235", end_color="548235", fill_type="solid")
+
+    # Headers
+    for ci, col_name in enumerate(cols, 1):
+        cell = ws.cell(row=1, column=ci, value=col_name)
+        cell.font = HEADER_FONT
+        cell.fill = CONTRACT_FILL if ci <= contract_col_count else COMPARE_FILL
+        cell.alignment = Alignment(horizontal="center", wrap_text=True)
+        cell.border = THIN_BORDER
+
+    # Identify currency / pct columns by name
+    currency_names = {"Managed $", "Commercial $", "Current $",
+                      "Integra Comm", "Integra ASO", "Integra Medicare",
+                      "Integra Medicaid", "CMS NR", "OHA Rate",
+                      "Δ Integra–Current"}
+    pct_names = {"Δ%"}
+
+    # Data rows
+    for ri, (_, drow) in enumerate(df.iterrows(), 2):
+        for ci, col_name in enumerate(cols, 1):
+            val = drow[col_name]
+            if isinstance(val, float) and math.isnan(val):
+                val = None
+            cell = ws.cell(row=ri, column=ci, value=val)
+            cell.border = THIN_BORDER
+            if col_name in currency_names and val is not None:
+                cell.number_format = CURRENCY
+            elif col_name in pct_names and val is not None:
+                cell.number_format = PCT_FMT
+
+        # Flag coloring
+        if "Flag" in cols:
+            flag_ci = cols.index("Flag") + 1
+            flag_val = str(drow.get("Flag", "") or "")
+            fill = _flag_fill(flag_val)
+            if fill:
+                ws.cell(row=ri, column=flag_ci).fill = fill
+
+    ws.freeze_panes = "D2"
+    ws.auto_filter.ref = ws.dimensions
+    _auto_width(ws)
 
 
 # ───────────────────────────────────────────────────────────────────────
@@ -957,8 +1251,36 @@ def main():
               f"({range_m} range), "
               f"{bcf} below CMS floor, {bc} below current")
 
+    # Build Integra lookup for Contract View
+    print("\n[5] Building Integra lookup for Contract View…")
+    integra_lk = _build_integra_lk(integra_dfs)
+    print(f"    Integra lookup: {len(integra_lk)} HCPCS|Mod keys")
+
+    # Load raw contract files + build Contract Views
+    print("\n[6] Building Contract View tabs…")
+    cv_configs = [
+        ("or_contracted",    "CV OR Contracted",    9),
+        ("or_participating", "CV OR Participating",  7),
+        ("wa_participating", "CV WA Participating",  7),
+    ]
+    cv_tables = {}
+    for sched_key, tab_name, n_contract_cols in cv_configs:
+        raw_path = FILES[f"{sched_key}_raw"]
+        if not raw_path.exists():
+            print(f"    SKIP {tab_name}: {raw_path} not found")
+            continue
+        raw_df = load_raw_contract(raw_path)
+        cms_lk = cms_or if "wa" not in sched_key else cms_wa
+        cv_df = build_contract_view(
+            raw_df, sched_key, integra_lk,
+            phcc_key_lks[sched_key], phcc_code_lks[sched_key],
+            phcc_range_lks[sched_key],
+            cms_lk, oha, hcpcs_desc)
+        cv_tables[tab_name] = (cv_df, n_contract_cols)
+        print(f"    {tab_name}: {len(raw_df)} raw rows -> {len(cv_df)} view rows")
+
     # Write XLSX
-    print("\n[5] Writing Excel workbook…")
+    print("\n[7] Writing Excel workbook…")
     out_path = OUTPUT / "integra_rate_analysis_v2.xlsx"
     wb = Workbook()
 
@@ -978,12 +1300,19 @@ def main():
         _auto_width(ws)
         print(f"    Tab: {payer_name} — {len(df)} rows")
 
+    # Tabs 6-8: Contract View
+    for tab_name, (cv_df, n_contract_cols) in cv_tables.items():
+        ws = wb.create_sheet(tab_name)
+        _write_contract_tab(ws, cv_df, n_contract_cols)
+        print(f"    Tab: {tab_name} — {len(cv_df)} rows")
+
     wb.save(out_path)
     print(f"\n[XLSX] {out_path.name} saved with {len(wb.sheetnames)} tabs")
     print(f"    Tabs: {', '.join(wb.sheetnames)}")
     print(f"\n{'='*70}")
     print(f"DONE — {out_path}")
     print(f"{'='*70}")
+    return out_path
 
 
 if __name__ == "__main__":

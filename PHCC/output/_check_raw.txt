@@ -1,0 +1,15 @@
+--- data/Contract/PHCC_OR_CONTRACTED.csv ---
+  Rows: 269
+  Cols: ['HCPCS', 'Mod', 'Description', 'Billing Unit', 'Managed Rental Rate', 'Managed Purchase Rate', 'Commercial Rental Rate', 'Commercial Purchase Rate', 'Comments']
+  Mod col: 'Mod', values: {'NU': 244, 'NU/RR': 23, '': 1, 'RR': 1}
+
+--- data/Contract/PHCC_OR_PARTICIPATING.csv ---
+  Rows: 156
+  Cols: ['HCPCS', 'Modifier', 'Description', 'Billing Unit', 'Rental Rate', 'Purchase Rate', 'Comments']
+  Mod col: 'Modifier', values: {'NU': 97, 'NU/RR': 37, 'RR': 14, 'RR/QE': 3, 'RR,QG,QF': 2, 'TW': 2, 'RR/QG': 1}
+
+--- data/Contract/PHCC_WA_PARTICIPATING.csv ---
+  Rows: 423
+  Cols: ['HCPCS', 'Modifier', 'Description', 'Billing Unit', 'Rental Rate', 'Purchase Rate', 'Comments']
+  Mod col: 'Modifier', values: {'NU': 345, 'NU/RR': 57, 'RR': 15, 'RR/QE': 2, 'NU**/RR': 1, 'RR,QG,QF': 1, 'RRNU': 1, 'RR/QG': 1}
+
